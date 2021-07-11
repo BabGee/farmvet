@@ -12,55 +12,29 @@
           <p>Dashboard</p>
         </a>
       </li>
-      <li>
-        <a href="{% url 'sick-approach' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>SickApproachForm</p>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="now-ui-icons records">MY RECORDS</i>
         </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'sick-approach' %}">SickApproachForm</a>
+          <a class="dropdown-item" href="{% url 'dead-approach' %}">DeadApproachForm</a>
+          <a class="dropdown-item" href="{% url 'surgical-approach' %}">SurgicalApproachForm</a>
+          <a class="dropdown-item" href="{% url 'deworming' %}">DewormingForm</a>
+          <a class="dropdown-item" href="{% url 'vaccination' %}">vaccination_form</a>
+          <a class="dropdown-item" href="{% url 'artificial-insemination' %}">ArtificialInseminationForm</a>
+          <a class="dropdown-item" href="{% url 'consultation' %}">FarmConsultationForm</a>
+          <a class="dropdown-item" href="{% url 'pregnancy_diagnosis' %}">PregnancyDiagnosisForm</a>
+        </div>
       </li>
       <li>
-        <a href="{% url 'dead-approach' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>DeadApproachForm</p>
-        </a>
+        <a href="#">Farm Appointments</a>
       </li>
       <li>
-        <a href="{% url 'surgical-approach' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>SurgicalApproachForm</p>
-        </a>
+        <a href="#">Gallery section </a>
       </li>
       <li>
-        <a href="{% url 'deworming' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>DewormingForm</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'vaccination' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>vaccination_form</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'artificial-insemination' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>ArtificialInseminationForm</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'consultation' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>FarmConsultationForm</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'pregnancy_diagnosis' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>PregnancyDiagnosisForm</p>
-        </a>
-      </li>
-      <li>
+        <a href="#">Learning resources</a>
       </li>
     </ul>
   </div>
