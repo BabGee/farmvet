@@ -13,70 +13,37 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'calf-registration' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>Calf Registration Form</p>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <i class="now-ui-icons location_world">MY RECORDS</i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'calf-registration' %}">Calf Registration Form</a>
+            <a class="dropdown-item" href="{% url 'livestock-inventory' %}">Livestock Inventory Form</a>
+          </div>
+        </li>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="now-ui-icons location_world">VET. RECORDS</i>
         </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'sickformpdf' %}">SickApproachFormPDF</a>
+          <a class="dropdown-item" href="{% url 'deadformpdf' %}">DeadApproachFormPDF</a>
+          <a class="dropdown-item" href="{% url 'surgicalformpdf' %}">SurgicalApproachFormPDF</a>
+          <a class="dropdown-item" href="{% url 'dewormingformpdf' %}">DewormingFormPDF</a>
+          <a class="dropdown-item" href="{% url 'vaccinationformpdf' %}">VaccinationFormPDF</a>
+          <a class="dropdown-item" href="{% url 'artificialformpdf' %}">ArtificialInseminationPDF</a>
+          <a class="dropdown-item" href="{% url 'consultationformpdf' %}">FarmConsultationPDF</a>
+          <a class="dropdown-item" href="{% url 'pregnancyformpdf' %}">PregnancyDiagnosisPDF</a>
+          <a class="dropdown-item" href="{% url 'calfregformpdf' %}">CalfRegistrationFormPDF</a>
+        </div>
       </li>
       <li>
-        <a href="{% url 'livestock-inventory' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>Livestock Inventory Form</p>
-        </a>
+        <a href="#">Farm Visit Request</a>
       </li>
       <li>
-        <a href="{% url 'sickformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>SickApproachFormPDF</p>
-        </a> 
-      </li>
-      <li>
-        <a href="{% url 'deadformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>DeadApproachFormPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'surgicalformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>SurgicalApproachFormPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'dewormingformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>DewormingFormPDF</p>
-        </a>
-      </li>
-       <li>
-        <a href="{% url 'vaccinationformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>VaccinationFormPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'artificialformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>ArtificialInseminationPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'consultationformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>FarmConsultationPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'pregnancyformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>PregnancyDiagnosisPDF</p>
-        </a>
-      </li>
-      <li>
-        <a href="{% url 'calfregformpdf' %}">
-          <i class="now-ui-icons location_map-big"></i>
-          <p>CalfRegistrationFormPDF</p>
-        </a>
+        <a href="#">My gallery</a>
       </li>
     </ul>
   </div>
