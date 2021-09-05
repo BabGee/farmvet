@@ -48,6 +48,8 @@ urlpatterns = [
     path('vet_portal/', portal_views.portal_vet, name='vet-portal'),
     path('farmer_portal/', portal_views.portal_farmer, name='farmer-portal'),
     path('student_portal/', portal_views.portal_student, name='student-portal'),
+    path('sickformview/',portal_views.sick_form_view,name='sickformview'),
+    path('editsickform/<int:pk>/',portal_views.edit_sick_form,name='sickform-edit'),
     #vet forms
     path('clinical_approach/',portal_views.clinical_approach,name='clinical-approach'),
     path('sick_approach', portal_views.sick_approach, name='sick-approach'),
@@ -63,6 +65,7 @@ urlpatterns = [
     path('consultation',portal_views.consultation,name='consultation'),
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),
+    path('sickformvetpdf/', login_required(portal_views.Sick_Form_Pdf_Vet.as_view()), name='sickformvetpdf'),
     path('deadformpdf/', login_required(portal_views.Dead_Form_Pdf.as_view()), name='deadformpdf'),
     path('surgicalformpdf/', login_required(portal_views.Surgical_Form_Pdf.as_view()), name='surgicalformpdf'),
     path('dewormingformpdf/', login_required(portal_views.Deworming_Form_Pdf.as_view()), name='dewormingformpdf'),

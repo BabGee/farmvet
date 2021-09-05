@@ -6,13 +6,18 @@ name = "pypi"
 [packages]
 asgiref = "==3.3.1"
 django-crispy-forms = "==1.9.2"
-pillow = "==8.1.0"
+Pillow = "==8.1.0"
 python-decouple = "==3.4"
 pytz = "==2020.4"
 sqlparse = "==0.4.1"
 Django = "==3.1.3"
+django-allauth = "==0.44.0"
+PyPDF2 = "==1.26.0"
+reportlab = "==3.5.64"
+requests = "==2.25.1"
+xhtml2pdf = "==0.2.5"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
