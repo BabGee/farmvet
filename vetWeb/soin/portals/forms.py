@@ -93,7 +93,7 @@ class CalfRegistrationForm(ModelForm):
 class LivestockInventoryForm(ModelForm):
 	class Meta:
 		model = Livestock_Inventory_Form
-		exclude = ['vet_form', 'report_created_on',]
+		exclude = ['vet_form', 'report_created_on', 'Attach_photos_of_your_animal']
 
 		widgets = {
             'date_of_culling': DateInput(attrs={'type': 'date'}),

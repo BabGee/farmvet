@@ -290,7 +290,7 @@ def calf_registration(request):
         'form':form,
         'name':'Calf Registration Form'
          }
-    return render(request, 'portals/forms.html', context) 
+    return render(request, 'portals/fforms.html', context) 
 
 @user_passes_test(farmer_check, login_url='login')
 def livestock_inventory(request):
@@ -310,8 +310,12 @@ def livestock_inventory(request):
         'form':form,
         'name':'Livestock Inventory Form',
          }
+<<<<<<< HEAD
     return render(request, 'portals/forms.html', context)
 
+=======
+    return render(request, 'portals/fforms.html', context) 
+>>>>>>> af6fc7c (changes)
 
 @user_passes_test(vet_check, login_url='login')
 def pregnancy_diagnosis(request):
@@ -494,7 +498,6 @@ class Vaccination_Form_Pdf(View):
         else:
             messages.warning(self.request, f'No vaccination form available for {self.request.user}')
             return redirect('index') 
-
 
 
 class Artificial_Insemination_Form_Pdf(View):
