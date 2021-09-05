@@ -1,3 +1,4 @@
+from django.http import request
 from django.shortcuts import render, redirect
 from user.models import Vet_Officer
 from .forms import SickApproachForm, DeathApproachForm, SurgicalApproachForm, DewormingForm, VaccinationForm, ArtificialInseminationForm, CalfRegistrationForm, LivestockInventoryForm, PregnancyDiagnosisForm,FarmConsultationForm
@@ -52,6 +53,27 @@ def portal_student(request):
 
 
 @user_passes_test(vet_check, login_url='login')
+def sick_form_view(request):
+    sick_approach_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'all_sick_forms': sick_approach_forms
+    }    
+    return render(request, 'portals/sickformview.html', context)
+    
+@user_passes_test(vet_check, login_url='login')
+def edit_sick_form(request, pk):
+	try:
+		sick_sel = Sick_Approach_Form.objects.get(pk = pk)
+	except Sick_Approach_Form.DoesNotExist:
+		return redirect('index')
+	sick_form = SickApproachForm(request.POST or None, instance = sick_sel)
+	if sick_form.is_valid():
+		sick_form.save()
+		return redirect('index')
+	return render(request, 'portals/editsickform.html', {'form':sick_form})
+
+
+@user_passes_test(vet_check, login_url='login')
 def clinical_approach(request):
     return render(request, 'portals/clinical_approach.html') 
 
@@ -63,7 +85,7 @@ def sick_approach(request):
             vet_sick_form = Vet_Forms(vet_username=request.user, is_sick_approach_form=True)
             vet_sick_form.save()
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -103,7 +125,7 @@ def surgical_approach(request):
             vet_surgical_form = Vet_Forms(vet_username=request.user, is_surgical_approach_form=True)
             vet_surgical_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details Succesfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -204,7 +226,7 @@ def calf_registration(request):
 @user_passes_test(farmer_check, login_url='login')
 def livestock_inventory(request):
     if request.method == "POST":
-        form = LivestockInventoryForm(request.POST, request.FILES)
+        form = LivestockInventoryForm(request.POST)
         if form.is_valid():
             vet_inventory_form = Vet_Forms(is_livestock_inventory_form=True)
             vet_inventory_form.save() 
@@ -219,7 +241,8 @@ def livestock_inventory(request):
         'form':form,
         'name':'Livestock Inventory Form',
          }
-    return render(request, 'portals/forms.html', context) 
+    return render(request, 'portals/forms.html', context)
+
 
 @user_passes_test(vet_check, login_url='login')
 def pregnancy_diagnosis(request):
@@ -284,6 +307,25 @@ class Sick_Form_Pdf(View):
             messages.warning(self.request, f'No Sick form available for {self.request.user}')
             return redirect('index')    
 
+
+class Sick_Form_Pdf_Vet(View):
+
+    def get(self, request):
+        try:
+            sick_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=self.request.user)
+        except:
+            messages.warning(self.request, f'Sick approach form for {request.user} not available')
+            return redirect('vet-portal')    
+        if sick_forms:
+            params = {
+                'today':timezone.now,
+                'forms': sick_forms,
+                'request': request
+            }
+            return Render.render('portals/sick_form_pdf.html', params)
+        else:
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            return redirect('index') 
 
 class Dead_Form_Pdf(View):
 

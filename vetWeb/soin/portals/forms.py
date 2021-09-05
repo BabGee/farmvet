@@ -11,7 +11,7 @@ User = get_user_model()
 class SickApproachForm(ModelForm):
 	class Meta:
 		model = Sick_Approach_Form
-		exclude = ['vet_form', 'report_created_on',]
+		exclude = ['vet_form', 'vet', 'report_created_on',]
 
 		widgets = {
             'start_dose_date': DateInput(attrs={'type': 'date'}),

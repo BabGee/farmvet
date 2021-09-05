@@ -146,7 +146,7 @@ class Sick_Approach_Form(models.Model):
 	comment = models.CharField(max_length=300,null=True,blank=True,verbose_name='comment')
 	
 	def __str__(self):
-		return f'Sick Form for {self.farmer_username}'
+		return f'Sick Form for farmer - {self.farmer_username}'
 	
 
 class Death_Approach_Form(models.Model):
@@ -298,7 +298,7 @@ class Livestock_Inventory_Form(models.Model):
 	if_yes_give_insuring_company = models.CharField(max_length=100, null=True, blank=True,verbose_name='If yes,give the insuring company')
 	date_of_culling = models.DateField(verbose_name='Date of culling')
 	give_reason_for_culling = models.CharField(max_length=200,null=True,blank=True,verbose_name='Give reason for culling')
-	Attach_photos_of_your_animal = models.ImageField(upload_to='vet_photos', height_field=None, width_field=None, default='default.jpg', max_length=100,verbose_name='Upload photos')
+	#Attach_photos_of_your_animal = models.ImageField(upload_to='vet_photos', height_field=None, width_field=None, default='default.jpg', max_length=100,verbose_name='Upload photos')
 	comment = models.CharField(max_length=100, null=True, blank=True)
 	
 
