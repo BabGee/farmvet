@@ -2,9 +2,6 @@
 
 {% load static %}
 
-
-{% load crispy_forms_tags %}
-
 {% block content %}
 <body class="">
   <div class="wrapper ">
@@ -88,29 +85,22 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                                <h2 class="title-1 m-b-25">Edit Sick Approach Form</h2>
-                                <div class="login-form">
-                                  <form class="user" method="POST">
-                                      {% csrf_token %}
-                                      {% for non_field_error in form.non_field_errors %}
-                                        <p class="alert-danger">{{ non_field_error }}</p>
-                                      {% endfor %}
-                  
-                                     {% for field in form %}
-                                        {% if field.errors %}
-                                          {% for error in field.errors %}
-                                            <div class="alert alert-danger" role="alert">
-                                              <p>{{error}}</p>
-                                            </div>
-                                          {% endfor %}
-                                        {% endif %}
-                                     {% endfor %}
-                                     <div class="form-group">
-                                      {{form|crispy}}
-                                     </div>
-                              <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Submit Details</button>
-                                  </form>             
-                              </div>
+                                <h2 class="title-1 m-b-25">{{form_name}} View </h2>
+
+                                <a href="{% url 'sick-approach' %}">
+                                  <h4>Create New {{form_name}}</h4>
+                                </a>
+
+                                {% for form in forms %}
+                                <div class="card-footer bg-transparent border-dark">
+                                  <p class="card-title"> {{form}}</p>
+                 
+                                  <center>
+                                <a href="{% url 'sickform-edit' pk=form.pk %}" class="btn btn-warning">edit</a>
+                                <a href="{% url 'sickformvetpdf' %}" class="btn btn-danger">View</a>
+                                  </center>
+                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </tbody>

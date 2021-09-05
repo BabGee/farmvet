@@ -85,19 +85,19 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                                <h2 class="title-1 m-b-25">Sick Approach Form View </h2>
+                                <h2 class="title-1 m-b-25">{{form_name}} View </h2>
 
-                                <a href="{% url 'sick-approach' %}">
-                                  <h4>Create New Sick Approach Form</h4>
+                                <a href="{% url 'deworming' %}">
+                                  <h4>Create New {{form_name}}</h4>
                                 </a>
 
-                                {% for sick_form in all_sick_forms %}
+                                {% for form in forms %}
                                 <div class="card-footer bg-transparent border-dark">
-                                  <p class="card-title"> {{sick_form}}</p>
+                                  <p class="card-title"> {{form}}</p>
                  
                                   <center>
-                                <a href="{% url 'sickform-edit' pk=sick_form.pk %}" class="btn btn-warning">edit</a>
-                                <a href="{% url 'sickformvetpdf' %}" class="btn btn-danger">View</a>
+                                <a href="{% url 'dewormingform-edit' pk=form.pk %}" class="btn btn-warning">edit</a>
+                                <a href="" class="btn btn-danger">View</a>
                                   </center>
                                 </div>
                                 {% endfor %}

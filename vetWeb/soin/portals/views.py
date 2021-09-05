@@ -6,8 +6,6 @@ from django.contrib import messages
 #from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
 from .models import Calf_Registration_Form, Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form
-from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Farm_Consultation
-from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form
 from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Farm_Consultation,Pregnancy_Diagnosis_Form
 from django.views import View
 from .render import Render
@@ -56,9 +54,11 @@ def portal_student(request):
 def sick_form_view(request):
     sick_approach_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
-        'all_sick_forms': sick_approach_forms
+        'form_name': 'Sick Approach Form',
+        'forms': sick_approach_forms
     }    
-    return render(request, 'portals/sickformview.html', context)
+    return render(request, 'portals/formview.html', context)
+ 
     
 @user_passes_test(vet_check, login_url='login')
 def edit_sick_form(request, pk):
@@ -70,7 +70,76 @@ def edit_sick_form(request, pk):
 	if sick_form.is_valid():
 		sick_form.save()
 		return redirect('index')
-	return render(request, 'portals/editsickform.html', {'form':sick_form})
+	return render(request, 'portals/editform.html', {'form':sick_form, 'form_name':'Sick'})
+
+
+ 
+@user_passes_test(vet_check, login_url='login')
+def dead_form_view(request):
+    dead_approach_forms = Death_Approach_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Death Approach Form',
+        'forms': dead_approach_forms
+    }    
+    return render(request, 'portals/deadformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_dead_form(request, pk):
+	try:
+		dead_sel = Death_Approach_Form.objects.get(pk = pk)
+	except Death_Approach_Form.DoesNotExist:
+		return redirect('index')
+	dead_form = DeathApproachForm(request.POST or None, instance = dead_sel)
+	if dead_form.is_valid():
+		dead_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':dead_form, 'form_name':'Dead'})
+
+ 
+@user_passes_test(vet_check, login_url='login')
+def surgical_form_view(request):
+    surgical_approach_forms = Surgical_Approach_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'surgical Approach Form',
+        'forms': surgical_approach_forms
+    }    
+    return render(request, 'portals/surgicalformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_surgical_form(request, pk):
+	try:
+		surgical_sel = Surgical_Approach_Form.objects.get(pk = pk)
+	except Surgical_Approach_Form.DoesNotExist:
+		return redirect('index')
+	surgical_form = SurgicalApproachForm(request.POST or None, instance = surgical_sel)
+	if surgical_form.is_valid():
+		surgical_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':surgical_form, 'form_name':'Surgical'})
+
+@user_passes_test(vet_check, login_url='login')
+def deworming_form_view(request):
+    deworming_approach_forms = Deworming_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Deworming Approach Form',
+        'forms': deworming_approach_forms
+    }    
+    return render(request, 'portals/dewormingformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_deworming_form(request, pk):
+	try:
+		surgical_sel = Deworming_Form.objects.get(pk = pk)
+	except Deworming_Form.DoesNotExist:
+		return redirect('index')
+	deworming_form = DewormingForm(request.POST or None, instance = surgical_sel)
+	if deworming_form.is_valid():
+		deworming_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':deworming_form, 'form_name':'Deworming'})
 
 
 @user_passes_test(vet_check, login_url='login')
@@ -345,6 +414,26 @@ class Dead_Form_Pdf(View):
         else:
             messages.warning(self.request,f'No dead form available for {self.request.user}')
             return redirect('index')
+
+
+class Dead_Form_Pdf_Vet(View):
+
+    def get(self, request):
+        try:
+            dead_forms = DeathApproachForm.objects.filter(vet_form__vet_username=self.request.user)
+        except:
+            messages.warning(self.request, f'Death approach form for {request.user} not available')
+            return redirect('vet-portal')    
+        if dead_forms:
+            params = {
+                'today':timezone.now,
+                'forms': dead_forms,
+                'request': request
+            }
+            return Render.render('portals/dead_form_pdf.html', params)
+        else:
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            return redirect('index') 
 
 
 class Surgical_Form_Pdf(View):
