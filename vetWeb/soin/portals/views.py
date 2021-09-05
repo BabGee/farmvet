@@ -56,9 +56,11 @@ def portal_student(request):
 def sick_form_view(request):
     sick_approach_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
-        'all_sick_forms': sick_approach_forms
+        'form_name': 'Sick Approach Form',
+        'forms': sick_approach_forms
     }    
-    return render(request, 'portals/sickformview.html', context)
+    return render(request, 'portals/formview.html', context)
+ 
     
 @user_passes_test(vet_check, login_url='login')
 def edit_sick_form(request, pk):
@@ -70,8 +72,31 @@ def edit_sick_form(request, pk):
 	if sick_form.is_valid():
 		sick_form.save()
 		return redirect('index')
-	return render(request, 'portals/editsickform.html', {'form':sick_form})
+	return render(request, 'portals/editform.html', {'form':sick_form, 'form_name':'Sick'})
 
+
+ 
+@user_passes_test(vet_check, login_url='login')
+def dead_form_view(request):
+    dead_approach_forms = Death_Approach_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Death Approach Form',
+        'forms': dead_approach_forms
+    }    
+    return render(request, 'portals/deadformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_dead_form(request, pk):
+	try:
+		dead_sel = Death_Approach_Form.objects.get(pk = pk)
+	except Death_Approach_Form.DoesNotExist:
+		return redirect('index')
+	dead_form = DeathApproachForm(request.POST or None, instance = dead_sel)
+	if dead_form.is_valid():
+		dead_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':dead_form, 'form_name':'Dead'})
 
 @user_passes_test(vet_check, login_url='login')
 def clinical_approach(request):
@@ -345,6 +370,26 @@ class Dead_Form_Pdf(View):
         else:
             messages.warning(self.request,f'No dead form available for {self.request.user}')
             return redirect('index')
+
+
+class Dead_Form_Pdf_Vet(View):
+
+    def get(self, request):
+        try:
+            dead_forms = DeathApproachForm.objects.filter(vet_form__vet_username=self.request.user)
+        except:
+            messages.warning(self.request, f'Death approach form for {request.user} not available')
+            return redirect('vet-portal')    
+        if dead_forms:
+            params = {
+                'today':timezone.now,
+                'forms': dead_forms,
+                'request': request
+            }
+            return Render.render('portals/dead_form_pdf.html', params)
+        else:
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            return redirect('index') 
 
 
 class Surgical_Form_Pdf(View):
