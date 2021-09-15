@@ -56,6 +56,12 @@ urlpatterns = [
     path('editsurgicalform/<int:pk>/',portal_views.edit_surgical_form,name='surgicalform-edit'),
     path('dewormingformview/',portal_views.deworming_form_view,name='dewormingformview'),
     path('editdewormingform/<int:pk>/',portal_views.edit_deworming_form,name='dewormingform-edit'),
+    path('vaccinationformview/',portal_views.vaccination_form_view,name='vaccinationformview'),
+    path('editvaccinationform/<int:pk>/',portal_views.edit_vaccination_form,name='vaccinationform-edit'),
+    path('artificialformview/',portal_views.artificial_form_view,name='artificialformview'),
+    path('editartificialform/<int:pk>/',portal_views.edit_artificial_form,name='artificialform-edit'),
+    path('consultationformview/',portal_views.consultation_form_view,name='consultationformview'),
+    path('editconsultationform/<int:pk>/',portal_views.edit_consultation_form,name='consultationform-edit'),
     #vet forms
     path('clinical_approach/',portal_views.clinical_approach,name='clinical-approach'),
     path('sick_approach', portal_views.sick_approach, name='sick-approach'),

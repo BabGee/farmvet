@@ -298,11 +298,7 @@ class Livestock_Inventory_Form(models.Model):
 	if_yes_give_insuring_company = models.CharField(max_length=100, null=True, blank=True,verbose_name='If yes,give the insuring company')
 	date_of_culling = models.DateField(verbose_name='Date of culling')
 	give_reason_for_culling = models.CharField(max_length=200,null=True,blank=True,verbose_name='Give reason for culling')
-<<<<<<< HEAD
 	#Attach_photos_of_your_animal = models.ImageField(upload_to='vet_photos', height_field=None, width_field=None, default='default.jpg', max_length=100,verbose_name='Upload photos')
-=======
-	Attach_photos_of_your_animal = models.ImageField(default='default.jpg', upload_to='livestock_pics', verbose_name='Upload photos')
->>>>>>> af6fc7c (changes)
 	comment = models.CharField(max_length=100, null=True, blank=True)
 	
 

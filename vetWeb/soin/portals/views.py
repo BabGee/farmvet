@@ -143,6 +143,78 @@ def edit_deworming_form(request, pk):
 
 
 @user_passes_test(vet_check, login_url='login')
+def vaccination_form_view(request):
+    vaccination_approach_forms = Vaccination_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Vaccination Form',
+        'forms': vaccination_approach_forms
+    }    
+    return render(request, 'portals/vaccinationformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_vaccination_form(request, pk):
+	try:
+		surgical_sel = Vaccination_Form.objects.get(pk = pk)
+	except Vaccination_Form.DoesNotExist:
+		return redirect('index')
+	vaccination_form = VaccinationForm(request.POST or None, instance = surgical_sel)
+	if vaccination_form.is_valid():
+		vaccination_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':vaccination_form, 'form_name':'Vaccination'})
+
+
+
+@user_passes_test(vet_check, login_url='login')
+def artificial_form_view(request):
+    artificial_approach_forms = Artificial_Insemination_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Artificial Form',
+        'forms': artificial_approach_forms
+    }    
+    return render(request, 'portals/artificialformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_artificial_form(request, pk):
+	try:
+		surgical_sel = Artificial_Insemination_Form.objects.get(pk = pk)
+	except Artificial_Form.DoesNotExist:
+		return redirect('index')
+	Artificial_form = ArtificialInseminationForm(request.POST or None, instance = surgical_sel)
+	if Artificial_form.is_valid():
+		artificial_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':artificial_form, 'form_name':'artificial'})
+
+
+
+@user_passes_test(vet_check, login_url='login')
+def consultation_form_view(request):
+    consultation_approach_forms = Farm_Consultation.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Consultation Form',
+        'forms': Farm_Consultation
+    }    
+    return render(request, 'portals/consultationformview.html', context)
+ 
+
+@user_passes_test(vet_check, login_url='login')
+def edit_consultation_form(request, pk):
+	try:
+		surgical_sel = Farm_Consultation.objects.get(pk = pk)
+	except Consultation_Form.DoesNotExist:
+		return redirect('index')
+	Consultation_form = FarmConsultationForm(request.POST or None, instance = surgical_sel)
+	if Consultation_form.is_valid():
+		consultation_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':consultation_form, 'form_name':'consultation'})
+
+
+
+@user_passes_test(vet_check, login_url='login')
 def clinical_approach(request):
     return render(request, 'portals/clinical_approach.html') 
 
@@ -310,12 +382,9 @@ def livestock_inventory(request):
         'form':form,
         'name':'Livestock Inventory Form',
          }
-<<<<<<< HEAD
+
     return render(request, 'portals/forms.html', context)
 
-=======
-    return render(request, 'portals/fforms.html', context) 
->>>>>>> af6fc7c (changes)
 
 @user_passes_test(vet_check, login_url='login')
 def pregnancy_diagnosis(request):
