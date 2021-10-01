@@ -60,8 +60,8 @@ urlpatterns = [
     path('editvaccinationform/<int:pk>/',portal_views.edit_vaccination_form,name='vaccinationform-edit'),
     path('artificialformview/',portal_views.artificial_form_view,name='artificialformview'),
     path('editartificialform/<int:pk>/',portal_views.edit_artificial_form,name='artificialform-edit'),
-    path('consultationformview/',portal_views.consultation_form_view,name='consultationformview'),
-    path('editconsultationform/<int:pk>/',portal_views.edit_consultation_form,name='consultationform-edit'),
+    path('pregnancyformview/',portal_views.pregnancy_form_view,name='pregnancyformview'),
+    path('editpregnancyform/<int:pk>/',portal_views.edit_pregnancy_form,name='pregnancyform-edit'),
     #vet forms
     path('clinical_approach/',portal_views.clinical_approach,name='clinical-approach'),
     path('sick_approach', portal_views.sick_approach, name='sick-approach'),

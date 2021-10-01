@@ -190,27 +190,29 @@ def edit_artificial_form(request, pk):
 
 
 
+
 @user_passes_test(vet_check, login_url='login')
-def consultation_form_view(request):
-    consultation_approach_forms = Farm_Consultation.objects.filter(vet_form__vet_username=request.user)
+def pregnancy_form_view(request):
+    pregnancy_approach_forms = Pregnancy_Diagnosis_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
-        'form_name': 'Consultation Form',
-        'forms': Farm_Consultation
+        'form_name': 'Pregnancy diagnosis Form',
+        'forms': pregnancy_approach_forms
     }    
-    return render(request, 'portals/consultationformview.html', context)
+    return render(request, 'portals/pregnancyformview.html', context)
  
 
 @user_passes_test(vet_check, login_url='login')
-def edit_consultation_form(request, pk):
+def edit_pregnancy_form(request, pk):
 	try:
-		surgical_sel = Farm_Consultation.objects.get(pk = pk)
-	except Consultation_Form.DoesNotExist:
+		surgical_sel = Pregnancy_Diagnosis_Form.objects.get(pk = pk)
+	except Pregnancy_Diagnosis_Form.DoesNotExist:
 		return redirect('index')
-	Consultation_form = FarmConsultationForm(request.POST or None, instance = surgical_sel)
-	if Consultation_form.is_valid():
-		consultation_form.save()
+	pregnancy_form = PregnancyDiagnosisForm(request.POST or None, instance = surgical_sel)
+	if pregnancy_form.is_valid():
+		pregnancy_form.save()
 		return redirect('index')
-	return render(request, 'portals/editform.html', {'form':consultation_form, 'form_name':'consultation'})
+	return render(request, 'portals/editform.html', {'form':Pregnancy_Diagnosis_Form, 'form_name':'pregnancy'})
+
 
 
 
