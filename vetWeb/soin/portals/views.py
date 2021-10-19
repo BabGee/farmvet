@@ -6,7 +6,7 @@ from django.contrib import messages
 #from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
 from .models import Calf_Registration_Form, Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form
-from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Farm_Consultation,Pregnancy_Diagnosis_Form
+from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Farm_Consultation,Pregnancy_Diagnosis_Form, Calf_Registration_Form
 from django.views import View
 from .render import Render
 from django.utils import timezone
@@ -332,7 +332,7 @@ def artificial_insemination(request):
             vet_ai_form = Vet_Forms(vet_username=request.user, is_artificial_insemination_form=True)
             vet_ai_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -367,6 +367,29 @@ def calf_registration(request):
     return render(request, 'portals/fforms.html', context) 
 
 @user_passes_test(farmer_check, login_url='login')
+def calf_form_view(request):
+    calf_forms = Calf_Registration_Form.objects.filter(farmer_username=request.user)
+    context = {
+        'form_name': 'Calf Registration Form',
+        'forms': calf_forms
+    }    
+    return render(request, 'portals/fformview.html', context)
+
+
+@user_passes_test(farmer_check, login_url='login')
+def edit_calf_registration(request, pk):
+	try:
+		calf_sel = Calf_Registration_Form.objects.get(pk = pk)
+	except Calf_Registration_Form.DoesNotExist:
+		return redirect('index')
+	calf_form = CalfRegistrationForm(request.POST or None, instance = calf_sel)
+	if calf_form.is_valid():
+		calf_form.save()
+		return redirect('index')
+	return render(request, 'portals/editfform.html', {'form':calf_form, 'form_name':'Calf Registration'})
+
+
+@user_passes_test(farmer_check, login_url='login')
 def livestock_inventory(request):
     if request.method == "POST":
         form = LivestockInventoryForm(request.POST)
@@ -386,6 +409,28 @@ def livestock_inventory(request):
          }
 
     return render(request, 'portals/forms.html', context)
+
+@user_passes_test(farmer_check, login_url='login')
+def calf_form_view(request):
+    calf_forms = Calf_Registration_Form.objects.filter(farmer_username=request.user)
+    context = {
+        'form_name': 'Calf Registration Form',
+        'forms': calf_forms
+    }    
+    return render(request, 'portals/fformview.html', context)
+
+
+@user_passes_test(farmer_check, login_url='login')
+def edit_calf_registration(request, pk):
+	try:
+		calf_sel = Calf_Registration_Form.objects.get(pk = pk)
+	except Calf_Registration_Form.DoesNotExist:
+		return redirect('index')
+	calf_form = CalfRegistrationForm(request.POST or None, instance = calf_sel)
+	if calf_form.is_valid():
+		calf_form.save()
+		return redirect('index')
+	return render(request, 'portals/editfform.html', {'form':calf_form, 'form_name':'Calf Registration'})
 
 
 @user_passes_test(vet_check, login_url='login')

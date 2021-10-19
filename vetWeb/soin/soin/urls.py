@@ -73,6 +73,8 @@ urlpatterns = [
     path('artificial_insemination', portal_views.artificial_insemination, name='artificial-insemination'),
     path('pregnancy_diagnosis',portal_views.pregnancy_diagnosis,name='pregnancy_diagnosis'),
     path('calf_registration', portal_views.calf_registration, name='calf-registration'),
+    path('calfformview/',portal_views.calf_form_view,name='calfformview'),
+    path('editcalfform/<int:pk>/',portal_views.edit_calf_registration,name='calfform-edit'),
     path('livestock_inventory', portal_views.livestock_inventory, name='livestock-inventory'),
     path('consultation',portal_views.consultation,name='consultation'),
     #Farmer fetching forms pdf
