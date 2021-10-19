@@ -268,7 +268,7 @@ def surgical_approach(request):
             vet_surgical_form = Vet_Forms(vet_username=request.user, is_surgical_approach_form=True)
             vet_surgical_form.save() 
             form.save()
-            messages.success(request, 'Details Succesfully Saved')
+            messages.success(request, 'Details Successfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -308,7 +308,7 @@ def vaccination(request):
             vet_vaccination_form = Vet_Forms(vet_username=request.user, is_vaccination_form=True)
             vet_vaccination_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -354,7 +354,7 @@ def calf_registration(request):
             form = form.save(commit=False)
             form.farmer_username = request.user
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('farmer-portal')    
 
     else:
@@ -397,7 +397,7 @@ def livestock_inventory(request):
             vet_inventory_form = Vet_Forms(is_livestock_inventory_form=True)
             vet_inventory_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('farmer-portal')
 
     else:
@@ -411,26 +411,26 @@ def livestock_inventory(request):
     return render(request, 'portals/forms.html', context)
 
 @user_passes_test(farmer_check, login_url='login')
-def calf_form_view(request):
-    calf_forms = Calf_Registration_Form.objects.filter(farmer_username=request.user)
+def livestock_inventory_view(request):
+    livestock_forms = Livestock_Inventory_Form.objects.filter(farmer_username=request.user)
     context = {
-        'form_name': 'Calf Registration Form',
-        'forms': calf_forms
+        'form_name': 'Livestock Inventory Form',
+        'forms': livestock_forms
     }    
-    return render(request, 'portals/fformview.html', context)
+    return render(request, 'portals/livestockformview.html', context)
 
 
 @user_passes_test(farmer_check, login_url='login')
-def edit_calf_registration(request, pk):
+def edit_livestock_inventory(request, pk):
 	try:
-		calf_sel = Calf_Registration_Form.objects.get(pk = pk)
-	except Calf_Registration_Form.DoesNotExist:
+		livestock_sel = Livestock_Inventory_Form.objects.get(pk = pk)
+	except Livestock_Inventory_Form.DoesNotExist:
 		return redirect('index')
-	calf_form = CalfRegistrationForm(request.POST or None, instance = calf_sel)
-	if calf_form.is_valid():
-		calf_form.save()
+	livestock_form = LivestockInventoryForm(request.POST or None, instance = livestock_sel)
+	if livestock_form.is_valid():
+		livestock_form.save()
 		return redirect('index')
-	return render(request, 'portals/editfform.html', {'form':calf_form, 'form_name':'Calf Registration'})
+	return render(request, 'portals/editfform.html', {'form':livestock_form, 'form_name':'Livestock Inventory Form'})
 
 
 @user_passes_test(vet_check, login_url='login')
@@ -441,7 +441,7 @@ def pregnancy_diagnosis(request):
             vet_preg_form = Vet_Forms(vet_username=request.user, is_pregnancy_diagnosis_form=True)
             vet_preg_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('vet-portal')    
 
     else:
@@ -464,7 +464,7 @@ def consultation(request):
             consul_form = Vet_Forms(vet_username=request.user, is_farm_consultation=True)
             consul_form.save() 
             form.save()
-            messages.success(request, 'Details  Succesfully Saved')
+            messages.success(request, 'Details  Successfully Saved')
             return redirect('vet-portal')    
 
     else:
