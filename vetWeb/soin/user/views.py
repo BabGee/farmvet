@@ -1,11 +1,10 @@
-from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 
 from . import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic import CreateView
+# from django.views.generic import CreateView
 #from django.views.generic import View
 
 from django.contrib.auth import get_user_model, logout
@@ -75,33 +74,33 @@ def farmer_signup_view(request):
 	return render(request, 'user/farmerregister.html', context)
 
 
-def student_signup_view(request):
-	if request.method == 'POST':
-		form = forms.StudentSignUpForm(request.POST)
-		if form.is_valid():
-			user = form.save(commit=False)
-			user.is_student = True
-			user.first_name = form.cleaned_data.get('first_name')
-			user.last_name = form.cleaned_data.get('last_name')
-			user.email = form.cleaned_data.get('email')
-			user.phone_number = form.cleaned_data.get('phone_number')
-			user.save()
-			student = Student.objects.create(user=user)
-			student.farm_name = form.cleaned_data.get('farm_name')
-			student.location = form.cleaned_data.get('location')
-			student.save()
-			username = form.cleaned_data.get('username')
-			messages.success(request, f'Account created for {username}. You can now login')
-			return redirect('student-login')
+# def student_signup_view(request):
+# 	if request.method == 'POST':
+# 		form = forms.StudentSignUpForm(request.POST)
+# 		if form.is_valid():
+# 			user = form.save(commit=False)
+# 			user.is_student = True
+# 			user.first_name = form.cleaned_data.get('first_name')
+# 			user.last_name = form.cleaned_data.get('last_name')
+# 			user.email = form.cleaned_data.get('email')
+# 			user.phone_number = form.cleaned_data.get('phone_number')
+# 			user.save()
+# 			student = Student.objects.create(user=user)
+# 			student.farm_name = form.cleaned_data.get('farm_name')
+# 			student.location = form.cleaned_data.get('location')
+# 			student.save()
+# 			username = form.cleaned_data.get('username')
+# 			messages.success(request, f'Account created for {username}. You can now login')
+# 			return redirect('student-login')
 
-	else:
-		form = forms.StudentSignUpForm()
+# 	else:
+# 		form = forms.StudentSignUpForm()
 
-	context = {
-		'form':form
-	}
+# 	context = {
+# 		'form':form
+# 	}
 
-	return render(request, 'user/studentregister.html', context)
+# 	return render(request, 'user/studentregister.html', context)
 		
 
 def vet_login(request):
@@ -111,15 +110,15 @@ def vet_login(request):
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
 		if user is not None:
-			login(request, user)
 			if user.is_authenticated and user.is_vet_officer:
+				login(request, user)
 				return redirect('vet-portal')
 			elif user.is_authenticated and user.is_farmer:
 				messages.warning(request, 'Kindly login as farmer')
 				return redirect('farmer-login')
-			elif user.is_authenticated and user.is_student:
-				messages.warning(request, 'Kindly login as student')
-				return redirect('student-login')
+			# elif user.is_authenticated and user.is_student:
+			# 	messages.warning(request, 'Kindly login as student')
+			# 	return redirect('student-login')
 				    
 		else:
 			messages.error(request, 'invalid Credentials')
@@ -133,42 +132,42 @@ def farmer_login(request):
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
 		if user is not None:
-			login(request, user)
 			if user.is_authenticated and user.is_farmer:
+				login(request, user)
 				return redirect('farmer-portal')
 			elif user.is_authenticated and user.is_vet_officer:
 				messages.warning(request, 'Kindly login as Vet Officer')
 				return redirect('vet-login')
-			elif user.is_authenticated and user.is_student:
-				messages.warning(request, 'Kindly login as student')
-				return redirect('student-login')
+			# elif user.is_authenticated and user.is_student:
+			# 	messages.warning(request, 'Kindly login as student')
+			# 	return redirect('student-login')
 				    
 		else:
  			messages.error(request, 'invalid Credentials')
     
 	return render(request, 'user/farmerlogin.html', {'form':form})
 
-def student_login(request):
-	form = AuthenticationForm()
-	if request.method == 'POST':  
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			login(request, user)
-			if user.is_authenticated and user.is_student:
-				return redirect('student-portal')
-			elif user.is_authenticated and user.is_vet_officer:
-				messages.warning(request, 'Kindly login as Vet Officer')
-				return redirect('vet-login')
-			elif user.is_authenticated and user.is_farmer:
-				messages.warning(request, 'Kindly login as Farmer')
-				return redirect('farmer-login')
+# def student_login(request):
+# 	form = AuthenticationForm()
+# 	if request.method == 'POST':  
+# 		username = request.POST['username']
+# 		password = request.POST['password']
+# 		user = authenticate(username=username, password=password)
+# 		if user is not None:
+# 			login(request, user)
+# 			if user.is_authenticated and user.is_student:
+# 				return redirect('student-portal')
+# 			elif user.is_authenticated and user.is_vet_officer:
+# 				messages.warning(request, 'Kindly login as Vet Officer')
+# 				return redirect('vet-login')
+# 			elif user.is_authenticated and user.is_farmer:
+# 				messages.warning(request, 'Kindly login as Farmer')
+# 				return redirect('farmer-login')
 				    
-		else:
-			messages.error(request, 'invalid Credentials')
+# 		else:
+# 			messages.error(request, 'invalid Credentials')
     
-	return render(request, 'user/studentlogin.html', {'form':form})
+# 	return render(request, 'user/studentlogin.html', {'form':form})
 
 def user_logout(request):
     logout(request)

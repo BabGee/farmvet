@@ -17,11 +17,11 @@ urlpatterns = [
     #users sign up
     path('user/signup/vet_officer/', user_views.vet0fficer_signup_view, name='vet-register'),
     path('user/signup/farmer/',user_views.farmer_signup_view,name='farmer-register'),
-    path('user/signup/student/',user_views.student_signup_view,name='student-register'),
+    # path('user/signup/student/',user_views.student_signup_view,name='student-register'),
     #users login 
     path('vet/login/',user_views.vet_login,name='vet-login'),
     path('farmer/login/',user_views.farmer_login,name='farmer-login'),
-    path('student/login/',user_views.student_login,name='student-login'),
+    # path('student/login/',user_views.student_login,name='student-login'),
     path('logout/', user_views.user_logout, name='logout'),
     #password reset
     path("password-reset", auth_views.PasswordResetView.as_view(template_name="user/password_reset.html"), name="password_reset"),
