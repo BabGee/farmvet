@@ -1,12 +1,9 @@
-from django.http import request
 from django.shortcuts import render, redirect
-from user.models import Vet_Officer
-from .forms import SickApproachForm, DeathApproachForm, SurgicalApproachForm, DewormingForm, VaccinationForm, ArtificialInseminationForm, CalfRegistrationForm, LivestockInventoryForm, PregnancyDiagnosisForm,FarmConsultationForm
+from user.models import *
+from .forms import *
 from django.contrib import messages
-#from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
-from .models import Calf_Registration_Form, Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form
-from .models import Vet_Forms, Sick_Approach_Form, Livestock_Inventory_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Farm_Consultation,Pregnancy_Diagnosis_Form, Calf_Registration_Form
+from .models import *
 from django.views import View
 from .render import Render
 from django.utils import timezone
