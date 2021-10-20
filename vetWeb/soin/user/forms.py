@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.db import transaction
-from .models import Vet_Officer, Farmer, Student, Farm
+
 
 User = get_user_model()
 
