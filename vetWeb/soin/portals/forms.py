@@ -1,10 +1,7 @@
-from django import forms
-from django.forms import ModelForm, DateInput, TextInput, TimeInput
+from django.forms import ModelForm, DateInput, TimeInput
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
-from django.db import transaction
 
-from portals.models import Vet_Forms, Sick_Approach_Form, Death_Approach_Form, Surgical_Approach_Form, Deworming_Form, Vaccination_Form, Artificial_Insemination_Form, Calf_Registration_Form, Livestock_Inventory_Form, Pregnancy_Diagnosis_Form, Farm_Consultation
+from portals.models import *
 
 User = get_user_model()
 	

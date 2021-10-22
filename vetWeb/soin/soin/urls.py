@@ -1,18 +1,3 @@
-"""soin URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from user import views as user_views
@@ -32,11 +17,11 @@ urlpatterns = [
     #users sign up
     path('user/signup/vet_officer/', user_views.vet0fficer_signup_view, name='vet-register'),
     path('user/signup/farmer/',user_views.farmer_signup_view,name='farmer-register'),
-    path('user/signup/student/',user_views.student_signup_view,name='student-register'),
+    # path('user/signup/student/',user_views.student_signup_view,name='student-register'),
     #users login 
     path('vet/login/',user_views.vet_login,name='vet-login'),
     path('farmer/login/',user_views.farmer_login,name='farmer-login'),
-    path('student/login/',user_views.student_login,name='student-login'),
+    # path('student/login/',user_views.student_login,name='student-login'),
     path('logout/', user_views.user_logout, name='logout'),
     #password reset
     path("password-reset", auth_views.PasswordResetView.as_view(template_name="user/password_reset.html"), name="password_reset"),
@@ -73,7 +58,11 @@ urlpatterns = [
     path('artificial_insemination', portal_views.artificial_insemination, name='artificial-insemination'),
     path('pregnancy_diagnosis',portal_views.pregnancy_diagnosis,name='pregnancy_diagnosis'),
     path('calf_registration', portal_views.calf_registration, name='calf-registration'),
+    path('calfformview/',portal_views.calf_form_view,name='calfformview'),
+    path('editcalfform/<int:pk>/',portal_views.edit_calf_registration,name='calfform-edit'),   
     path('livestock_inventory', portal_views.livestock_inventory, name='livestock-inventory'),
+    path('livestockformview/',portal_views.livestock_inventory_view,name='livestockformview'),
+    path('editlivestockform/<int:pk>/',portal_views.edit_livestock_inventory,name='livestockform-edit'),     
     path('consultation',portal_views.consultation,name='consultation'),
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),
