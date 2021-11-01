@@ -1,6 +1,10 @@
 
 # SoinVet web application
 
+## Hosted
+
+https://ishasr.pythonanywhere.com/
+
 SoinVet is a web-based system  written in Python 3 and using Django framework with the following functionalities.
 1.Register new users (Veterinary officers, Farmers and Students)
 2.Log in registered users and be directed to their respective dashboards.
