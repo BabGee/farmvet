@@ -62,7 +62,9 @@ urlpatterns = [
     path('editcalfform/<int:pk>/',portal_views.edit_calf_registration,name='calfform-edit'),   
     path('livestock_inventory', portal_views.livestock_inventory, name='livestock-inventory'),
     path('livestockformview/',portal_views.livestock_inventory_view,name='livestockformview'),
-    path('editlivestockform/<int:pk>/',portal_views.edit_livestock_inventory,name='livestockform-edit'),     
+    path('editlivestockform/<int:pk>/',portal_views.edit_livestock_inventory,name='livestockform-edit'),
+    path('consultationformview/',portal_views.consultation_form_view,name='consultationformview'),
+    path('editconsultationform/<int:pk>/',portal_views.edit_consultation_form,name='consultation-edit'),     
     path('consultation',portal_views.consultation,name='consultation'),
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),

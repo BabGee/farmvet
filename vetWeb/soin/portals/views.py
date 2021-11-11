@@ -450,7 +450,29 @@ def pregnancy_diagnosis(request):
          }
     return render(request, 'portals/forms.html', context)
  
+
+@user_passes_test(vet_check, login_url='login')
+def consultation_form_view(request):
+    consultation_forms = Farm_Consultation.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Consultation Form',
+        'forms': consultation_forms
+    }    
+    return render(request, 'portals/consultationformview.html', context)
+ 
     
+@user_passes_test(vet_check, login_url='login')
+def edit_consultation_form(request, pk):
+	try:
+		consul_sel = Farm_Consultation.objects.get(pk = pk)
+	except Farm_Consultation.DoesNotExist:
+		return redirect('index')
+	consultation_form = FarmConsultationForm(request.POST or None, instance = consul_sel)
+	if consultation_form.is_valid():
+		consultation_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':consultation_form, 'form_name':'Consultation'})
+
 @user_passes_test(vet_check, login_url='login')
 def consultation(request):
     if request.method == "POST":
