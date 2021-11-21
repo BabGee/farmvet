@@ -371,7 +371,7 @@ class Veterinary_Billing_Form(models.Model):
 	def __str__(self):
 		return f'Name of form: Veterinary Billing Form'
 
-class Laboratory_Form(models.models):
+class Laboratory_Form(models.Model):
 	vet_form = models.OneToOneField(Vet_Forms, on_delete=models.CASCADE, primary_key=True)
 	farmer_username = models.CharField(max_length=12,verbose_name='Farmer Username')
 	Mobile_number = models.IntegerField(null=True,blank=True,verbose_name='Mobile number')
@@ -379,14 +379,14 @@ class Laboratory_Form(models.models):
 	sample = models.CharField(max_length=12,verbose_name='Samples collected')
 	name_animal = models.CharField(max_length=12,verbose_name='Namer of the animal')
 	date_of_submission = models.DateField(verbose_name='Date of submission')
-	idenfication = IntegerField(null=True,blank=True,verbose_name='ID number')
-	storage = CharField(max_length=100,verbose_name='Method of storage')
+	idenfication = models.IntegerField(null=True,blank=True,verbose_name='ID number')
+	storage = models.CharField(max_length=100,verbose_name='Method of storage')
 	transportation =  models.CharField(max_length=200,verbose_name='Transportation means')
 	expected_duration =  models.CharField(max_length=100,verbose_name='Expected duration of the sampling process')
-	sample_collected_sick animal =  models.CharField(max_length=5, choices=YES_NO_CHOICES, default='Y',null=True,verbose_name='Was the sample collected for sick animal?')
+	sample_collected_sick_animal = models.CharField(max_length=5, choices=YES_NO_CHOICES, default='Y',null=True,verbose_name='Was the sample collected for sick animal?')
 	sample_collected_dead = models.CharField(max_length=5, choices=YES_NO_CHOICES, default='Y',null=True,verbose_name='Was the sample collected from a dead animal?')
 	if_yes_sick = models.CharField(max_length=100, null=True, blank=True,verbose_name='If yes,state the signs shown by the cadaver')
-	findings = CharField(max_length=100,verbose_name='What was the laboratory findings?')
+	findings = models.CharField(max_length=100,verbose_name='What was the laboratory findings?')
 	vet_name =  models.CharField(max_length=12,verbose_name='Name of the Veterinary officer who collected the sample.')
 	registration_number = models.CharField(max_length=100, verbose_name='Registration number', null=True, blank=True)
 	Mobile_number = models.IntegerField(null=True,blank=True,verbose_name='Mobile number')
