@@ -360,7 +360,7 @@ class Veterinary_Billing_Form(models.Model):
 	bill_paid = models.CharField(max_length=100, null=True, blank=True,verbose_name='Total amount billed.')
 	total_bill = models.CharField(max_length=100, null=True, blank=True,verbose_name='Total bill paid by the farmer.')
 	balance_due = models.CharField(max_length=100, null=True, blank=True,verbose_name='Balance due to be paid.')
-	agreed_date = models.CharField(max_length=100, null=True, blank=True,verbose_name='Agreed date of payment.')
+	agreed_date =  models.DateField(max_length=100, null=True, blank=True,verbose_name='Agreed date of payment.')
 	suggest_payment = models.CharField(max_length=20, choices=PAYMENT, default='0', verbose_name='Suggest payment plan for the balance',null=True, blank=True)
 	vet_name =  models.CharField(max_length=12,verbose_name='Veterinary officer claiming the bill.')
 	registration_number = models.CharField(max_length=100, verbose_name='Registration number', null=True, blank=True)
@@ -369,7 +369,7 @@ class Veterinary_Billing_Form(models.Model):
 
 
 	def __str__(self):
-		return f'Name of form: Pregnancy Diagnosis Form'
+		return f'Name of form: Veterinary Billing Form'
 
 class Laboratory_Form(models.models):
 	vet_form = models.OneToOneField(Vet_Forms, on_delete=models.CASCADE, primary_key=True)
@@ -394,3 +394,8 @@ class Laboratory_Form(models.models):
 	registration_number = models.CharField(max_length=100, verbose_name='Registration number', null=True, blank=True)
 	Mobile_number = models.IntegerField(null=True,blank=True,verbose_name='Mobile number')
 	comment = models.CharField(max_length=100, null=True, blank=True)
+
+
+
+	def __str__(self):
+		return f'Name of form: Laboratory Form'

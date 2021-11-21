@@ -114,3 +114,24 @@ class FarmConsultationForm(ModelForm):
 		model = Farm_Consultation
 		exclude = ['vet_form', 'report_created_on',]	
 
+
+class VeterinaryBillingForm(ModelForm):
+	class Meta:
+		model = Veterinary_Billing_Form
+		exclude = ['vet_form', 'report_created_on',]
+
+		widgets = {
+            'agreed_date': DateInput(attrs={'type': 'date'}),
+        }
+
+
+class LaboratoryForm(ModelForm):
+	class Meta:
+		model = Laboratory_Form
+		exclude = ['vet_form', 'report_created_on',]
+
+		widgets = {
+            'date_of_submission ': DateInput(attrs={'type': 'date'}),
+        }
+
+
