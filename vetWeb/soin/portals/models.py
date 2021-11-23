@@ -115,6 +115,8 @@ class Vet_Forms(models.Model):
 	is_livestock_inventory_form = models.BooleanField(default=False)
 	is_farm_consultation = models.BooleanField(default=False)
 	is_pregnancy_diagnosis_form = models.BooleanField(default=False)
+	is_vet_billing_form = models.BooleanField(default=False)
+	is_lab_form = models.BooleanField(default=False)
 	report_created_on = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

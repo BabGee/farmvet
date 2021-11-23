@@ -496,6 +496,96 @@ def consultation(request):
     return render(request, 'portals/forms.html', context)
 
 
+
+@user_passes_test(vet_check, login_url='login')
+def vet_billing_form_view(request):
+    bill_forms = Veterinary_Billing_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Vet Billing Form',
+        'forms': bill_forms
+    }    
+    return render(request, 'portals/vetbillformview.html', context)
+ 
+    
+@user_passes_test(vet_check, login_url='login')
+def edit_vet_billing_form(request, pk):
+	try:
+		bill_sel = Veterinary_Billing_Form.objects.get(pk = pk)
+	except Veterinary_Billing_Form.DoesNotExist:
+		return redirect('index')
+	billing_form = VeterinaryBillingForm(request.POST or None, instance = bill_sel)
+	if billing_form.is_valid():
+		billing_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':billing_form, 'form_name':'Vet Billing'})
+
+@user_passes_test(vet_check, login_url='login')
+def vet_billing(request):
+    if request.method == "POST":
+        form = VeterinaryBillingForm(request.POST)
+        if form.is_valid():
+            billing_form = Vet_Forms(is_vet_billing_form=True)
+            billing_form.save() 
+            bill_form = Vet_Forms(vet_username=request.user, is_vet_billing_form=True)
+            bill_form.save() 
+            form.save()
+            messages.success(request, 'Details  Successfully Saved')
+            return redirect('vet-portal')    
+
+    else:
+        form = VeterinaryBillingForm()
+
+    context = {
+        'form':form,
+        'name':'Vet Billing form'
+         }
+    return render(request, 'portals/forms.html', context)
+
+
+@user_passes_test(vet_check, login_url='login')
+def lab_form_view(request):
+    lab_forms = Laboratory_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Laboratory Form',
+        'forms': lab_forms
+    }    
+    return render(request, 'portals/labformview.html', context)
+ 
+    
+@user_passes_test(vet_check, login_url='login')
+def edit_lab_form(request, pk):
+	try:
+		lab_sel = Laboratory_Form.objects.get(pk = pk)
+	except Laboratory_Form.DoesNotExist:
+		return redirect('index')
+	lab_form = LaboratoryForm(request.POST or None, instance = lab_sel)
+	if lab_form.is_valid():
+		lab_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':lab_form, 'form_name':'Laboratory'})
+
+@user_passes_test(vet_check, login_url='login')
+def lab(request):
+    if request.method == "POST":
+        form = LaboratoryForm(request.POST)
+        if form.is_valid():
+            labo_form = Vet_Forms(is_vet_billing_form=True)
+            labo_form.save() 
+            lab_form = Vet_Forms(vet_username=request.user, is_lab_form=True)
+            lab_form.save() 
+            form.save()
+            messages.success(request, 'Details  Successfully Saved')
+            return redirect('vet-portal')    
+
+    else:
+        form = LaboratoryForm()
+
+    context = {
+        'form':form,
+        'name':'Laboratory form'
+         }
+    return render(request, 'portals/forms.html', context)
+
 class Sick_Form_Pdf(View):
 
     def get(self, request):
