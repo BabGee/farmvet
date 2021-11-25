@@ -63,9 +63,16 @@ urlpatterns = [
     path('livestock_inventory', portal_views.livestock_inventory, name='livestock-inventory'),
     path('livestockformview/',portal_views.livestock_inventory_view,name='livestockformview'),
     path('editlivestockform/<int:pk>/',portal_views.edit_livestock_inventory,name='livestockform-edit'),
-    path('consultationformview/',portal_views.consultation_form_view,name='consultationformview'),
-    path('editconsultationform/<int:pk>/',portal_views.edit_consultation_form,name='consultation-edit'),     
     path('consultation',portal_views.consultation,name='consultation'),
+    path('consultationformview/',portal_views.consultation_form_view,name='consultationformview'),
+    path('editconsultationform/<int:pk>/',portal_views.edit_consultation_form,name='consultation-edit'),
+    path('vetbilling',portal_views.vet_billing,name='vetbilling'),
+    path('vetbillingformview/',portal_views.vet_billing_form_view,name='vetbillformview'),
+    path('editvetbillingform/<int:pk>/',portal_views.edit_vet_billing_form,name='vetbill-edit'),
+    path('laboratory',portal_views.lab,name='lab'),
+    path('labformview/',portal_views.lab_form_view,name='labformview'),
+    path('editlabform/<int:pk>/',portal_views.edit_lab_form,name='lab-edit'),       
+    
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),
     path('sickformvetpdf/', login_required(portal_views.Sick_Form_Pdf_Vet.as_view()), name='sickformvetpdf'),
