@@ -51,7 +51,7 @@ def portal_student(request):
 def sick_form_view(request):
     sick_approach_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
-        'form_name': 'Sick Approach Form',
+        'form_name': 'Clinical Approach Form',
         'forms': sick_approach_forms
     }    
     return render(request, 'portals/formview.html', context)
@@ -67,7 +67,7 @@ def edit_sick_form(request, pk):
 	if sick_form.is_valid():
 		sick_form.save()
 		return redirect('index')
-	return render(request, 'portals/editform.html', {'form':sick_form, 'form_name':'Sick'})
+	return render(request, 'portals/editform.html', {'form':sick_form, 'form_name':'Clinical'})
 
 
  
@@ -75,7 +75,7 @@ def edit_sick_form(request, pk):
 def dead_form_view(request):
     dead_approach_forms = Death_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
-        'form_name': 'Death Approach Form',
+        'form_name': 'Post Mortem Approach Form',
         'forms': dead_approach_forms
     }    
     return render(request, 'portals/deadformview.html', context)
@@ -91,7 +91,7 @@ def edit_dead_form(request, pk):
 	if dead_form.is_valid():
 		dead_form.save()
 		return redirect('index')
-	return render(request, 'portals/editform.html', {'form':dead_form, 'form_name':'Dead'})
+	return render(request, 'portals/editform.html', {'form':dead_form, 'form_name':'Post Mortem'})
 
  
 @user_passes_test(vet_check, login_url='login')
@@ -233,7 +233,7 @@ def sick_approach(request):
 
     context = {
         'form':form,
-        'name':'Sick Approach Form'
+        'name':'Clinical Approach Form'
          }
     return render(request, 'portals/forms.html', context) 
 
@@ -253,7 +253,7 @@ def dead_approach(request):
 
     context = {
         'form':form,
-        'name':'Death Approach Form'
+        'name':'Post Mortem Approach Form'
          }
     return render(request, 'portals/forms.html', context)   
 
