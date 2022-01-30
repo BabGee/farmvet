@@ -588,6 +588,17 @@ def lab(request):
 
 
 @user_passes_test(vet_check, login_url='login')
+def referral_form_view(request):
+    referral_forms = Referral_Form.objects.filter(vet_form__vet_username=request.user)
+    context = {
+        'form_name': 'Referral Form',
+        'forms': referral_forms
+    }    
+    return render(request, 'portals/referralformview.html', context)
+
+
+
+@user_passes_test(vet_check, login_url='login')
 def referral_form(request):
     if request.method == "POST":
         form = ReferalForm(request.POST)
@@ -601,7 +612,7 @@ def referral_form(request):
             return redirect('vet-portal')    
 
     else:
-        form = ReferralForm()
+        form = ReferalForm()
 
     context = {
         'form':form,

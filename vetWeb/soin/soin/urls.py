@@ -73,7 +73,7 @@ urlpatterns = [
     path('labformview/',portal_views.lab_form_view,name='labformview'),
     path('editlabform/<int:pk>/',portal_views.edit_lab_form,name='lab-edit'),  
     path('referral',portal_views.referral_form,name='referral'),
-    #path('referralformview/',portal_views.referral_form_view,name='referralformview'),
+    path('referralformview/',portal_views.referral_form_view,name='referralformview'),
     #path('editlabform/<int:pk>/',portal_views.edit_referral_form,name='lab-edit'),       
     
     #Farmer fetching forms pdf
