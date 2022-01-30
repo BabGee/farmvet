@@ -71,7 +71,10 @@ urlpatterns = [
     path('editvetbillingform/<int:pk>/',portal_views.edit_vet_billing_form,name='vetbill-edit'),
     path('laboratory',portal_views.lab,name='lab'),
     path('labformview/',portal_views.lab_form_view,name='labformview'),
-    path('editlabform/<int:pk>/',portal_views.edit_lab_form,name='lab-edit'),       
+    path('editlabform/<int:pk>/',portal_views.edit_lab_form,name='lab-edit'),  
+    path('referral',portal_views.referral_form,name='referral'),
+    #path('referralformview/',portal_views.referral_form_view,name='referralformview'),
+    #path('editlabform/<int:pk>/',portal_views.edit_referral_form,name='lab-edit'),       
     
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),

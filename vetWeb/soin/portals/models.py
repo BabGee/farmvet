@@ -117,6 +117,7 @@ class Vet_Forms(models.Model):
 	is_pregnancy_diagnosis_form = models.BooleanField(default=False)
 	is_vet_billing_form = models.BooleanField(default=False)
 	is_lab_form = models.BooleanField(default=False)
+	is_referral_form = models.BooleanField(default=False)
 	report_created_on = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
@@ -246,6 +247,12 @@ class Artificial_Insemination_Form(models.Model):
 	vet_form = models.OneToOneField(Vet_Forms, on_delete=models.CASCADE, primary_key=True)
 	farmer_username = models.CharField(max_length=12,verbose_name='Farmer Username')
 	Name_of_the_cow = models.CharField(max_length=12,verbose_name='Name of the cow or identification number of the cow')
+	sex_of_the_calf_born = models.CharField(max_length=20, choices=SEX_CHOICES, default='M',verbose_name='Sex of the calf born')
+	date_of_birth = models.DateField(verbose_name='Date of birth')
+	nature_of_birth = models.CharField(max_length=20, choices=NATURE_CHOICES, default='A',verbose_name='Nature of birth')
+	number_of_repeat = models.CharField(max_length=100, null=True, blank=True,verbose_name='Number of repeat')
+	abortion_rate = models.CharField(max_length=100, null=True, blank=True,verbose_name='Abortion rate')
+	reason_for_the_cause_of_abortion = models.CharField(max_length=100, null=True, blank=True,verbose_name='reason for abortion')
 	time_of_heat_sign = models.TimeField(verbose_name='Time of heat sign')
 	date_of_insemination = models.DateField(verbose_name='Date of insemination')
 	time_of_insemination = models.TimeField(verbose_name='Time of insemination')
@@ -253,12 +260,6 @@ class Artificial_Insemination_Form(models.Model):
 	sire_name = models.CharField(max_length=200,null=True,blank=True,verbose_name='Sire`s name')
 	sire_origin = models.CharField(max_length=200,null=True,blank=True,verbose_name='Sire origin')
 	bull_code= models.CharField(max_length=100, null=True, blank=True,verbose_name='Bull code')
-	sex_of_the_calf_born = models.CharField(max_length=20, choices=SEX_CHOICES, default='M',verbose_name='Sex of the calf born')
-	date_of_birth = models.DateField(verbose_name='Date of birth')
-	nature_of_birth = models.CharField(max_length=20, choices=NATURE_CHOICES, default='A',verbose_name='Nature of birth')
-	number_of_repeat = models.CharField(max_length=100, null=True, blank=True,verbose_name='Number of repeat')
-	abortion_rate = models.CharField(max_length=100, null=True, blank=True,verbose_name='Abortion rate')
-	reason_for_the_cause_of_abortion = models.CharField(max_length=100, null=True, blank=True,verbose_name='reason for abortion')
 	breed_used = models.CharField(max_length=100, null=True, blank=True,verbose_name='Breed used')
 	source_of_semen = models.CharField(max_length=100, null=True, blank=True,verbose_name='Source of the semen')
 	date_of_repeat_checked = models.DateField(verbose_name='Date of repeat check')
@@ -399,5 +400,26 @@ class Laboratory_Form(models.Model):
 
 
 
+
 	def __str__(self):
 		return f'Name of form: Laboratory Form'
+
+class Referral_Form(models.Model):
+	vet_form = models.OneToOneField(Vet_Forms, on_delete=models.CASCADE, primary_key=True)
+	farmer_username = models.CharField(max_length=12,verbose_name='Farmer Username')
+	Mobile_number = models.IntegerField(null=True,blank=True,verbose_name='Mobile number')
+	case_referal = models.CharField(max_length=20, choices=YES_NO_CHOICES, default='Y' ,verbose_name='Is the case referal to another vet?')
+	previous_treated = models.CharField(max_length=12,verbose_name='State the previous treated given')
+	state_prognosis = models.CharField(max_length=100,verbose_name='state the prognosis of the animal on referal.')
+	referal_date = models.DateField(verbose_name='Date of referal')
+	suggest_vet = models.CharField(max_length=20, choices=YES_NO_CHOICES, default='Y' ,verbose_name='Do you suggest a vet to be referred to?')
+	if_yes_leave_phone_number = models.CharField(max_length=100, null=True, blank=True,verbose_name='If yes,write phone number of the vet')
+	registration_number = models.CharField(max_length=15, verbose_name='Registration number of the vet')
+	comment = models.CharField(max_length=100, null=True, blank=True)
+
+
+
+
+	def __str__(self):
+		return f'Name of form: Referal Form'
+

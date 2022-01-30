@@ -132,6 +132,15 @@ class LaboratoryForm(ModelForm):
 
 		widgets = {
             'date_of_submission ': DateInput(attrs={'type': 'date'}),
-        }
+        } 
+
+class ReferalForm(ModelForm):
+	class Meta:
+		model = Referral_Form
+		exclude = ['vet_form', 'report_created_on',]
+
+		widgets = {
+            'referal_date ': DateInput(attrs={'type': 'date'}),
+        } 
 
 

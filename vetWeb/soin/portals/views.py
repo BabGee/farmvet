@@ -586,6 +586,29 @@ def lab(request):
          }
     return render(request, 'portals/forms.html', context)
 
+
+@user_passes_test(vet_check, login_url='login')
+def referral_form(request):
+    if request.method == "POST":
+        form = ReferalForm(request.POST)
+        if form.is_valid():
+            referral_form = Vet_Forms(is_vet_referral_form=True)
+            referral_form.save() 
+            referral_form= Vet_Forms(vet_username=request.user, is_referral_form=True)
+            referral_form.save() 
+            form.save()
+            messages.success(request, 'Details  Successfully Saved')
+            return redirect('vet-portal')    
+
+    else:
+        form = ReferralForm()
+
+    context = {
+        'form':form,
+        'name':'Referral form'
+         }
+    return render(request, 'portals/forms.html', context)
+
 class Sick_Form_Pdf(View):
 
     def get(self, request):
@@ -612,7 +635,7 @@ class Sick_Form_Pdf_Vet(View):
         try:
             sick_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=self.request.user)
         except:
-            messages.warning(self.request, f'Clinical approach form for {request.user} not available')
+            messages.warning(self.request, f'Sick approach form for {request.user} not available')
             return redirect('vet-portal')    
         if sick_forms:
             params = {
@@ -622,7 +645,7 @@ class Sick_Form_Pdf_Vet(View):
             }
             return Render.render('portals/sick_form_pdf.html', params)
         else:
-            messages.warning(self.request, f'No Clinical form available for {self.request.user}')
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
             return redirect('index') 
 
 class Dead_Form_Pdf(View):
@@ -630,8 +653,8 @@ class Dead_Form_Pdf(View):
     def get(self, request):
         try:
             dead_forms = Death_Approach_Form.objects.filter(farmer_username=request.user)
-        except:
-            messages.warning(self.request, f'Post Mortem form for {request.user} not available')
+        except: 
+            messages.warning(self.request, f'Sick approach form for {request.user} not available')
             return redirect('farmer-portal')
         if dead_forms:
             params = {
@@ -641,7 +664,7 @@ class Dead_Form_Pdf(View):
             }
             return Render.render('portals/dead_form_pdf.html',params)
         else:
-            messages.warning(self.request,f'No Post Mortem Form available for {self.request.user}')
+            messages.warning(self.request,f'No dead form available for {self.request.user}')
             return redirect('index')
 
 
@@ -651,7 +674,7 @@ class Dead_Form_Pdf_Vet(View):
         try:
             dead_forms = DeathApproachForm.objects.filter(vet_form__vet_username=self.request.user)
         except:
-            messages.warning(self.request, f'Post Mortem Form for {request.user} not available')
+            messages.warning(self.request, f'Death approach form for {request.user} not available')
             return redirect('vet-portal')    
         if dead_forms:
             params = {
@@ -661,7 +684,7 @@ class Dead_Form_Pdf_Vet(View):
             }
             return Render.render('portals/dead_form_pdf.html', params)
         else:
-            messages.warning(self.request, f'No Post Mortem form available for {self.request.user}')
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
             return redirect('index') 
 
 
