@@ -588,7 +588,7 @@ def lab(request):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def referral_form_view(request):
     referral_forms = Referral_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -599,9 +599,9 @@ def referral_form_view(request):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 
-@user_passes_test(vet_check, login_url='vet-login') (forms)
+@user_passes_test(vet_check, login_url='vet-login') 
 def referral_form(request):
     if request.method == "POST":
         form = ReferalForm(request.POST)
