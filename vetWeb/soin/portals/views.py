@@ -20,7 +20,7 @@ def student_check(request):
     return request.is_student    
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def portal_vet(request):
     vet_officers = Vet_Officer.objects.all()
     no_vet_forms =Vet_Forms.objects.filter(vet_username=request.user).count()
@@ -30,7 +30,7 @@ def portal_vet(request):
     }
     return render(request, 'portals/dashboardVet.html', context)
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def portal_farmer(request):
     vet_officers = Vet_Officer.objects.all()
     context = {
@@ -38,7 +38,7 @@ def portal_farmer(request):
     }
     return render(request, 'portals/dashboardFarmer.html', context)
 
-@user_passes_test(student_check, login_url='login')
+@user_passes_test(student_check, login_url='vet-login')
 def portal_student(request):
     vet_officers = Vet_Officer.objects.all()
     context = {
@@ -47,7 +47,7 @@ def portal_student(request):
     return render(request, 'portals/dashboardStudent.html', context)  
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def sick_form_view(request):
     sick_approach_forms = Sick_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -57,7 +57,7 @@ def sick_form_view(request):
     return render(request, 'portals/formview.html', context)
  
     
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_sick_form(request, pk):
 	try:
 		sick_sel = Sick_Approach_Form.objects.get(pk = pk)
@@ -71,7 +71,7 @@ def edit_sick_form(request, pk):
 
 
  
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def dead_form_view(request):
     dead_approach_forms = Death_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -81,7 +81,7 @@ def dead_form_view(request):
     return render(request, 'portals/deadformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_dead_form(request, pk):
 	try:
 		dead_sel = Death_Approach_Form.objects.get(pk = pk)
@@ -94,7 +94,7 @@ def edit_dead_form(request, pk):
 	return render(request, 'portals/editform.html', {'form':dead_form, 'form_name':'Post Mortem'})
 
  
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def surgical_form_view(request):
     surgical_approach_forms = Surgical_Approach_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -104,7 +104,7 @@ def surgical_form_view(request):
     return render(request, 'portals/surgicalformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_surgical_form(request, pk):
 	try:
 		surgical_sel = Surgical_Approach_Form.objects.get(pk = pk)
@@ -116,7 +116,7 @@ def edit_surgical_form(request, pk):
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':surgical_form, 'form_name':'Surgical'})
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def deworming_form_view(request):
     deworming_approach_forms = Deworming_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -126,7 +126,7 @@ def deworming_form_view(request):
     return render(request, 'portals/dewormingformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_deworming_form(request, pk):
 	try:
 		surgical_sel = Deworming_Form.objects.get(pk = pk)
@@ -139,7 +139,7 @@ def edit_deworming_form(request, pk):
 	return render(request, 'portals/editform.html', {'form':deworming_form, 'form_name':'Deworming'})
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def vaccination_form_view(request):
     vaccination_approach_forms = Vaccination_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -149,7 +149,7 @@ def vaccination_form_view(request):
     return render(request, 'portals/vaccinationformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_vaccination_form(request, pk):
 	try:
 		surgical_sel = Vaccination_Form.objects.get(pk = pk)
@@ -163,7 +163,7 @@ def edit_vaccination_form(request, pk):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def artificial_form_view(request):
     artificial_approach_forms = Artificial_Insemination_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -173,7 +173,7 @@ def artificial_form_view(request):
     return render(request, 'portals/artificialformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_artificial_form(request, pk):
 	try:
 		surgical_sel = Artificial_Insemination_Form.objects.get(pk = pk)
@@ -188,7 +188,7 @@ def edit_artificial_form(request, pk):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def pregnancy_form_view(request):
     pregnancy_approach_forms = Pregnancy_Diagnosis_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -198,7 +198,7 @@ def pregnancy_form_view(request):
     return render(request, 'portals/pregnancyformview.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_pregnancy_form(request, pk):
 	try:
 		surgical_sel = Pregnancy_Diagnosis_Form.objects.get(pk = pk)
@@ -213,11 +213,11 @@ def edit_pregnancy_form(request, pk):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def clinical_approach(request):
     return render(request, 'portals/clinical_approach.html') 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def sick_approach(request):
     if request.method == "POST":
         form = SickApproachForm(request.POST)
@@ -237,7 +237,7 @@ def sick_approach(request):
          }
     return render(request, 'portals/forms.html', context) 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def dead_approach(request):
     if request.method == "POST":
         form = DeathApproachForm(request.POST)
@@ -257,7 +257,7 @@ def dead_approach(request):
          }
     return render(request, 'portals/forms.html', context)   
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def surgical_approach(request):
     if request.method == "POST":
         form = SurgicalApproachForm(request.POST)
@@ -277,7 +277,7 @@ def surgical_approach(request):
          }
     return render(request, 'portals/forms.html', context) 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def deworming(request):
     if request.method == "POST":
         form = DewormingForm(request.POST)
@@ -297,7 +297,7 @@ def deworming(request):
          }
     return render(request, 'portals/forms.html', context)
 
-@user_passes_test(vet_check, login_url='login')    
+@user_passes_test(vet_check, login_url='vet-login')    
 def vaccination(request):
     if request.method == "POST":
         form = VaccinationForm(request.POST)
@@ -317,11 +317,11 @@ def vaccination(request):
          }
     return render(request, 'portals/forms.html', context)
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def breeding_record(request):
     ...
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def artificial_insemination(request):
     if request.method == "POST":
         form = ArtificialInseminationForm(request.POST)
@@ -341,7 +341,7 @@ def artificial_insemination(request):
          }
     return render(request, 'portals/forms.html', context) 
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def calf_registration(request):
     if request.method == "POST":
         form = CalfRegistrationForm(request.POST)
@@ -363,7 +363,7 @@ def calf_registration(request):
          }
     return render(request, 'portals/fforms.html', context) 
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def calf_form_view(request):
     calf_forms = Calf_Registration_Form.objects.filter(farmer_username=request.user)
     context = {
@@ -373,7 +373,7 @@ def calf_form_view(request):
     return render(request, 'portals/fformview.html', context)
 
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def edit_calf_registration(request, pk):
 	try:
 		calf_sel = Calf_Registration_Form.objects.get(pk = pk)
@@ -386,7 +386,7 @@ def edit_calf_registration(request, pk):
 	return render(request, 'portals/editfform.html', {'form':calf_form, 'form_name':'Calf Registration'})
 
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def livestock_inventory(request):
     if request.method == "POST":
         form = LivestockInventoryForm(request.POST)
@@ -407,7 +407,7 @@ def livestock_inventory(request):
 
     return render(request, 'portals/forms.html', context)
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def livestock_inventory_view(request):
     livestock_forms = Livestock_Inventory_Form.objects.filter(farmer_username=request.user)
     context = {
@@ -417,7 +417,7 @@ def livestock_inventory_view(request):
     return render(request, 'portals/livestockformview.html', context)
 
 
-@user_passes_test(farmer_check, login_url='login')
+@user_passes_test(farmer_check, login_url='vet-login')
 def edit_livestock_inventory(request, pk):
 	try:
 		livestock_sel = Livestock_Inventory_Form.objects.get(pk = pk)
@@ -430,7 +430,7 @@ def edit_livestock_inventory(request, pk):
 	return render(request, 'portals/editfform.html', {'form':livestock_form, 'form_name':'Livestock Inventory Form'})
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def pregnancy_diagnosis(request):
     if request.method == "POST":
         form = PregnancyDiagnosisForm(request.POST)
@@ -451,7 +451,7 @@ def pregnancy_diagnosis(request):
     return render(request, 'portals/forms.html', context)
  
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def consultation_form_view(request):
     consultation_forms = Farm_Consultation.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -461,7 +461,7 @@ def consultation_form_view(request):
     return render(request, 'portals/consultationformview.html', context)
  
     
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_consultation_form(request, pk):
 	try:
 		consul_sel = Farm_Consultation.objects.get(pk = pk)
@@ -473,7 +473,7 @@ def edit_consultation_form(request, pk):
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':consultation_form, 'form_name':'Consultation'})
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def consultation(request):
     if request.method == "POST":
         form = FarmConsultationForm(request.POST)
@@ -497,7 +497,7 @@ def consultation(request):
 
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def vet_billing_form_view(request):
     bill_forms = Veterinary_Billing_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -507,7 +507,7 @@ def vet_billing_form_view(request):
     return render(request, 'portals/vetbillformview.html', context)
  
     
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_vet_billing_form(request, pk):
 	try:
 		bill_sel = Veterinary_Billing_Form.objects.get(pk = pk)
@@ -519,7 +519,7 @@ def edit_vet_billing_form(request, pk):
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':billing_form, 'form_name':'Vet Billing'})
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def vet_billing(request):
     if request.method == "POST":
         form = VeterinaryBillingForm(request.POST)
@@ -542,7 +542,7 @@ def vet_billing(request):
     return render(request, 'portals/forms.html', context)
 
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def lab_form_view(request):
     lab_forms = Laboratory_Form.objects.filter(vet_form__vet_username=request.user)
     context = {
@@ -552,7 +552,7 @@ def lab_form_view(request):
     return render(request, 'portals/labformview.html', context)
  
     
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def edit_lab_form(request, pk):
 	try:
 		lab_sel = Laboratory_Form.objects.get(pk = pk)
@@ -564,7 +564,7 @@ def edit_lab_form(request, pk):
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':lab_form, 'form_name':'Laboratory'})
 
-@user_passes_test(vet_check, login_url='login')
+@user_passes_test(vet_check, login_url='vet-login')
 def lab(request):
     if request.method == "POST":
         form = LaboratoryForm(request.POST)
@@ -587,6 +587,7 @@ def lab(request):
     return render(request, 'portals/forms.html', context)
 
 
+<<<<<<< HEAD
 @user_passes_test(vet_check, login_url='login')
 def referral_form_view(request):
     referral_forms = Referral_Form.objects.filter(vet_form__vet_username=request.user)
@@ -599,6 +600,9 @@ def referral_form_view(request):
 
 
 @user_passes_test(vet_check, login_url='login')
+=======
+@user_passes_test(vet_check, login_url='vet-login')
+>>>>>>> 50a6a61 (forms)
 def referral_form(request):
     if request.method == "POST":
         form = ReferalForm(request.POST)
