@@ -411,7 +411,7 @@ class Referral_Form(models.Model):
 	case_referal = models.CharField(max_length=20, choices=YES_NO_CHOICES, default='Y' ,verbose_name='Is the case referal to another vet?')
 	previous_treated = models.CharField(max_length=12,verbose_name='State the previous treated given')
 	state_prognosis = models.CharField(max_length=100,verbose_name='state the prognosis of the animal on referal.')
-	referal_date = models.DateField(verbose_name='Date of referal')
+	referal_date = models.DateField(verbose_name='referal date')
 	suggest_vet = models.CharField(max_length=20, choices=YES_NO_CHOICES, default='Y' ,verbose_name='Do you suggest a vet to be referred to?')
 	if_yes_leave_phone_number = models.CharField(max_length=100, null=True, blank=True,verbose_name='If yes,write phone number of the vet')
 	registration_number = models.CharField(max_length=15, verbose_name='Registration number of the vet')
