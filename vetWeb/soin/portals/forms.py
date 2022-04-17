@@ -140,7 +140,7 @@ class ReferalForm(ModelForm):
 		exclude = ['vet_form', 'report_created_on',]
 
 		widgets = {
-            'referal_date ': DateInput(attrs={'type': 'date'}),
+            'referal_date': DateInput(attrs={'type': 'date'}),
         } 
 
 
