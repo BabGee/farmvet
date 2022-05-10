@@ -74,7 +74,8 @@ urlpatterns = [
     path('editlabform/<int:pk>/',portal_views.edit_lab_form,name='lab-edit'),  
     path('referral',portal_views.referral_form,name='referral'),
     path('referralformview/',portal_views.referral_form_view,name='referralformview'),
-    #path('editlabform/<int:pk>/',portal_views.edit_referral_form,name='lab-edit'),       
+    path('editreferralform/<int:pk>/',portal_views.edit_referral_form,name='referral-edit'),  
+          
     
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),
@@ -94,6 +95,7 @@ urlpatterns = [
     path('pregnancyformpdf/', login_required(portal_views.Pregnancy_Diagnosis_Form_Pdf.as_view()), name='pregnancyformpdf'),
     path('calfregformpdf/', login_required(portal_views.Calf_Registration_Form_Pdf.as_view()), name='calfregformpdf'),
     path('inventorypdf/', login_required(portal_views.Livestock_Form_Pdf.as_view()), name='inventoryformpdf'),
+    path('referralpdf/', login_required(portal_views.referral_Form_Pdf.as_view()), name='referralformpdf'),
     path('gallerypdf/', portal_views.display_images, name='display-images')
 
 ]

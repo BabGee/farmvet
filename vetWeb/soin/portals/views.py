@@ -623,6 +623,72 @@ def referral_form(request):
          }
     return render(request, 'portals/forms.html', context)
 
+
+
+
+class referral_Form_Pdf(View):
+
+    def get(self, request):
+        try:
+            referral_forms = Referral_Form.objects.filter(farmer_username=request.user)
+        except:
+            messages.warning(self.request, f'Sick approach form for {request.user} not available')
+            return redirect('farmer-portal')    
+        if referral_forms:
+            params = {
+                'today':timezone.now,
+                'forms': referral_forms,
+                'request': request          
+            }
+            return Render.render('portals/referral_form_pdf.html', params)
+        else:
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            return redirect('index')    
+
+
+class Referral_Form_Pdf_Vet(View):
+
+    def get(self, request):
+        try:
+            referral_forms = Referral_Form.objects.filter(vet_form__vet_username=self.request.user)
+        except:
+            messages.warning(self.request, f'referral form for {request.user} not available')
+            return redirect('vet-portal')    
+        if referral_forms:
+            params = {
+                'today':timezone.now,
+                'forms': referral_forms,
+                'request': request
+            }
+            return Render.render('portals/referral_form_pdf.html', params)
+        else:
+            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            return redirect('index') 
+
+
+@user_passes_test(vet_check, login_url='vet-login')
+def edit_referral_form(request, pk):
+	try:
+		referral_sel = Referral_Form.objects.get(pk = pk)
+	except Referral_Form.DoesNotExist:
+		return redirect('index')
+	referral_form = ReferalForm(request.POST or None, instance = referral_sel)
+	if referral_form.is_valid():
+		referral_form.save()
+		return redirect('index')
+	return render(request, 'portals/editform.html', {'form':referral_form, 'form_name':'referral'})
+
+
+
+
+
+
+
+
+
+
+
+
 class Sick_Form_Pdf(View):
 
     def get(self, request):
@@ -635,7 +701,7 @@ class Sick_Form_Pdf(View):
             params = {
                 'today':timezone.now,
                 'forms': sick_forms,
-                'request': request
+                'request': request          
             }
             return Render.render('portals/sick_form_pdf.html', params)
         else:

@@ -421,5 +421,5 @@ class Referral_Form(models.Model):
 
 
 	def __str__(self):
-		return f'Name of form: Referal Form'
+		return f'Name of form: Referral Form'
 

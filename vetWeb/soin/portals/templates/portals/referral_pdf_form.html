@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Vaccination Form </title>
+    <title>Refferal Form </title>
     <style type="text/css">
         @page {
             size: A4;
@@ -12,7 +12,7 @@
         .table {
             width: 100%;
             max-width: 100%;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             background-color: #fff;
         }
 
@@ -44,6 +44,7 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+
         .list-group p {
             width: 100%;
             height: 20px;
@@ -56,17 +57,16 @@
 </head>
 <body>
 
-{% for form in forms %} 
+{% for form in forms %}
 <div class="container">
     <div class="card">
-        <h2 class="text-center"> Vaccination pdf  </h2>
+        <h2 class="text-center"> referral pdf  </h2>
         <div class="card-header">      
             <h3>DATE : {{form.vet_form.report_created_on}}</h3>
         </div>
 
         <div class="list-group">
-            <p>Vet Officer Name: {{form.vet_form.vet_username}} </p>
-            <p>Farmer Name {{ request.user }}</p>     
+            <p>Name: {{ request.user }}</p>     
         </div>
 
         <table class="table">
@@ -78,59 +78,32 @@
             </thead>
             <tbody> 
                 <tr>
-                    <td>Animal species targetted</td>
-                    <td>{{ form.species_targeted }}</td>
+                    <td>Is the case referal to another vet?</td>
+                    <td>{{ form.case_referal }}</td>
                 <tr>
-                    <td>If other specify</td>
-                    <td>{{ form.if_other_specify  }}</td>
-                </tr>   
                 <tr>
-                    <td>Number of animals vaccinated.</td>
-                    <td>{{ form.number_of_animals_vaccinated }}</td>
-                </tr> 
-                <tr>
-                    <td>Age of animal</td>
-                    <td>{{ form.age_of_animal }}</td>
+                    <td>State the previous treated given</td>
+                    <td>{{ form.previous_treated }}</td>
                 </tr>
                 <tr>
-                    <td>Sex of the animal</td>
-                    <td>{{ form.get_sex_of_the_animal_display }}</td>
+                    <td>state the prognosis of the animal on referal.</td>
+                    <td>{{ form.state_prognosis }}</td>
                 </tr>
                 <tr>
-                    <td>Breed of the animal</td>
-                    <td>{{ form.animal_breed }}</td>
+                    <td>referal date</td>
+                    <td>{{ form.referal_date }}</td>
                 </tr>
                 <tr>
-                    <td>Colour of the animal</td>
-                    <td>{{ form.animal_colour }}</td>
+                    <td>Do you suggest a vet to be referred to?</td>
+                    <td>{{ form.suggest_vet }}</td>
                 </tr>
                 <tr>
-                    <td>other description</td>
-                    <td>{{ form.other_description }}</td>
+                    <td>If yes,write phone number of the vet</td>
+                    <td>{{ form.if_yes_leave_phone_number }}</td>
                 </tr>
                 <tr>
-                    <td>The disease target</td>
-                    <td>{{ form.targetted_disease }}</td>
-                </tr>
-                <tr>
-                    <td>Vaccine used</td>
-                    <td>{{ form.vaccines_used }}</td>
-                </tr>
-                <tr>
-                    <td>Date of vaccination</td>
-                    <td>{{ form.date_of_vaccination }}</td>
-                </tr>
-                <tr>
-                    <td>Next date of vaccination</td>
-                    <td>{{ form.next_date_of_vaccination  }}</td>
-                </tr>
-                <tr>
-                    <td>Name of the crush</td>
-                    <td>{{ form.name_of_the_crush }}</td>
-                </tr>
-                <tr>
-                    <td>Nature of the vaccination program</td>
-                    <td>{{ form.get_nature_of_the_vacination_program_display }}</td>
+                    <td>Registration number of the vet</td>
+                    <td>{{ form.registration_number }}</td>
                 </tr>
                 <tr>
                     <td>Comment</td>
