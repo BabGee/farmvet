@@ -599,15 +599,13 @@ def referral_form_view(request):
 
 
 
-@user_passes_test(vet_check, login_url='vet-login')
+@user_passes_test(vet_check, login_url='vet-login') 
 
 @user_passes_test(vet_check, login_url='vet-login') 
 def referral_form(request):
     if request.method == "POST":
         form = ReferalForm(request.POST)
         if form.is_valid():
-            referral_form = Vet_Forms(is_vet_referral_form=True)
-            referral_form.save() 
             referral_form= Vet_Forms(vet_username=request.user, is_referral_form=True)
             referral_form.save() 
             form.save()
@@ -632,7 +630,7 @@ class referral_Form_Pdf(View):
         try:
             referral_forms = Referral_Form.objects.filter(farmer_username=request.user)
         except:
-            messages.warning(self.request, f'Sick approach form for {request.user} not available')
+            messages.warning(self.request, f'referral form for {request.user} not available')
             return redirect('farmer-portal')    
         if referral_forms:
             params = {
@@ -640,9 +638,9 @@ class referral_Form_Pdf(View):
                 'forms': referral_forms,
                 'request': request          
             }
-            return Render.render('portals/referral_form_pdf.html', params)
+            return Render.render('portals/referral_pdf_form.html', params)
         else:
-            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            messages.warning(self.request, f'No referral form available for {self.request.user}')
             return redirect('index')    
 
 
@@ -660,9 +658,9 @@ class Referral_Form_Pdf_Vet(View):
                 'forms': referral_forms,
                 'request': request
             }
-            return Render.render('portals/referral_form_pdf.html', params)
+            return Render.render('portals/referral_pdf_form.html', params)
         else:
-            messages.warning(self.request, f'No Sick form available for {self.request.user}')
+            messages.warning(self.request, f'No referral form available for {self.request.user}')
             return redirect('index') 
 
 
@@ -677,15 +675,6 @@ def edit_referral_form(request, pk):
 		referral_form.save()
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':referral_form, 'form_name':'referral'})
-
-
-
-
-
-
-
-
-
 
 
 
