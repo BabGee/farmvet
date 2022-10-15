@@ -80,7 +80,7 @@ urlpatterns = [
     #Farmer fetching forms pdf
     path('sickformpdf/', login_required(portal_views.sick_form_pdf), name='sickformpdf'),
     path('sickformvetpdf/', login_required(portal_views.Sick_Form_Pdf_Vet.as_view()), name='sickformvetpdf'),
-    path('deadformpdf/', login_required(portal_views.Dead_Form_Pdf.as_view()), name='deadformpdf'),
+    path('deadformpdf/', login_required(portal_views.dead_form_pdf), name='deadformpdf'),
     path('deadformvetpdf/', login_required(portal_views.Dead_Form_Pdf_Vet.as_view()), name='deadformvetpdf'),
     path('surgicalformpdf/', login_required(portal_views.Surgical_Form_Pdf.as_view()), name='surgicalformpdf'),
     path('dewormingformpdf/', login_required(portal_views.Deworming_Form_Pdf.as_view()), name='dewormingformpdf'),

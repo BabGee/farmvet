@@ -681,24 +681,11 @@ def edit_referral_form(request, pk):
 	return render(request, 'portals/editform.html', {'form':referral_form, 'form_name':'referral'})
 
 def sick_form_pdf(request):
-    sales = [
-        {"item": "Keyboard", "amount": "$120,00"},
-        {"item": "Mouse", "amount": "$10,00"},
-        {"item": "House", "amount": "$1 000 000,00"},
-    ]
     try:
         sick_forms = Sick_Approach_Form.objects.filter(farmer_username=request.user)
     except:
         messages.warning(request, f'Sick approach form for {request.user} not available')
         return redirect('farmer-portal')
-    information = {}
-    data = [information]
-    for form in sick_forms:
-        information['field'] = 'Species affected'
-        information['value'] =  form.species_affected
-        information['field'] = 'Number of Species affected'
-        information['value'] = str(form.num_of_species_affected)
-    
 
     pdf = FPDF('P', 'mm', 'A4')
     pdf.add_page()
@@ -719,12 +706,13 @@ def sick_form_pdf(request):
         pdf.cell(200, 8, f"{'nature of the disease'.ljust(30)} {form.disease_nature.rjust(30)}", 0, 1)
         pdf.cell(200, 8, f"{'Clinical Signs'.ljust(30)} {form.clinical_signs.rjust(30)}", 0, 1)
         pdf.cell(200, 8, f"{'Disease Diagnosis'.ljust(30)} {form.disease_diagnosis.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Differential Diagnosis'.ljust(30)} {form.differential_diagnosis.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Final Diagnosis'.ljust(30)} {form.final_diagnosis.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'duration of the sickness '.ljust(30)} {form.sickness_duration.rjust(30)}", 0, 1)
+
 
     pdf.output('clinical_approach_report.pdf', 'F')
     return FileResponse(open('clinical_approach_report.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
-
-
-
 
 
 class Sick_Form_Pdf(View):
@@ -765,6 +753,40 @@ class Sick_Form_Pdf_Vet(View):
         else:
             messages.warning(self.request, f'No Sick form available for {self.request.user}')
             return redirect('index') 
+
+
+
+def dead_form_pdf(request):
+    try:
+        dead_forms = Death_Approach_Form.objects.filter(farmer_username=request.user)
+    except:
+        messages.warning(request, f'Sick approach form for {request.user} not available')
+        return redirect('farmer-portal')
+
+    pdf = FPDF('P', 'mm', 'A4')
+    pdf.add_page()
+    pdf.set_font('courier', 'B', 16)
+    pdf.cell(40, 10, 'Post Mortem Approach Form',0,1)
+    pdf.cell(40, 10, '',0,1)
+    pdf.set_font('courier', '', 12)
+    pdf.cell(200, 8, f"{'Field'.ljust(30)} {'Value'.rjust(30)}", 0, 1)
+    pdf.line(10, 30, 180, 30)
+    pdf.line(10, 38, 180, 38)
+    # for line in data:
+    #     pdf.cell(200, 8, f"{line['field'].ljust(30)} {line['value'].rjust(20)}", 0, 1)
+
+    for form in dead_forms:
+        pdf.cell(200, 8, f"{'Name or identification number'.ljust(30)} {form.name_of_the_animal.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Sex of the animal'.ljust(30)} {str(form.sex_of_the_animal).rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Number of animals dead'.ljust(30)} {str(form.num_of_species_dead).rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'When was the case reported'.ljust(30)} {form.case_history.rjust(30)}", 0, 1)
+
+
+
+    pdf.output('postmortem_approach_report.pdf', 'F')
+    return FileResponse(open('postmortem_approach_report.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
+
+
 
 class Dead_Form_Pdf(View):
 
