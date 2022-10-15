@@ -78,7 +78,7 @@ urlpatterns = [
           
     
     #Farmer fetching forms pdf
-    path('sickformpdf/', login_required(portal_views.Sick_Form_Pdf.as_view()), name='sickformpdf'),
+    path('sickformpdf/', login_required(portal_views.sick_form_pdf), name='sickformpdf'),
     path('sickformvetpdf/', login_required(portal_views.Sick_Form_Pdf_Vet.as_view()), name='sickformvetpdf'),
     path('deadformpdf/', login_required(portal_views.Dead_Form_Pdf.as_view()), name='deadformpdf'),
     path('deadformvetpdf/', login_required(portal_views.Dead_Form_Pdf_Vet.as_view()), name='deadformvetpdf'),

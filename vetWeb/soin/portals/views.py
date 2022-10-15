@@ -8,6 +8,10 @@ from django.views import View
 from .render import Render
 from django.utils import timezone
 
+from django.http import FileResponse
+from fpdf import FPDF
+
+
 
 
 def vet_check(request):
@@ -675,6 +679,51 @@ def edit_referral_form(request, pk):
 		referral_form.save()
 		return redirect('index')
 	return render(request, 'portals/editform.html', {'form':referral_form, 'form_name':'referral'})
+
+def sick_form_pdf(request):
+    sales = [
+        {"item": "Keyboard", "amount": "$120,00"},
+        {"item": "Mouse", "amount": "$10,00"},
+        {"item": "House", "amount": "$1 000 000,00"},
+    ]
+    try:
+        sick_forms = Sick_Approach_Form.objects.filter(farmer_username=request.user)
+    except:
+        messages.warning(request, f'Sick approach form for {request.user} not available')
+        return redirect('farmer-portal')
+    information = {}
+    data = [information]
+    for form in sick_forms:
+        information['field'] = 'Species affected'
+        information['value'] =  form.species_affected
+        information['field'] = 'Number of Species affected'
+        information['value'] = str(form.num_of_species_affected)
+    
+
+    pdf = FPDF('P', 'mm', 'A4')
+    pdf.add_page()
+    pdf.set_font('courier', 'B', 16)
+    pdf.cell(40, 10, 'Clinical Approach Form:',0,1)
+    pdf.cell(40, 10, '',0,1)
+    pdf.set_font('courier', '', 12)
+    pdf.cell(200, 8, f"{'Field'.ljust(30)} {'Value'.rjust(30)}", 0, 1)
+    pdf.line(10, 30, 180, 30)
+    pdf.line(10, 38, 180, 38)
+    # for line in data:
+    #     pdf.cell(200, 8, f"{line['field'].ljust(30)} {line['value'].rjust(20)}", 0, 1)
+
+    for form in sick_forms:
+        pdf.cell(200, 8, f"{'Species affected'.ljust(30)} {form.species_affected.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Number of Species affected'.ljust(30)} {str(form.num_of_species_affected).rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Identification number'.ljust(30)} {form.id_animal.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'nature of the disease'.ljust(30)} {form.disease_nature.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Clinical Signs'.ljust(30)} {form.clinical_signs.rjust(30)}", 0, 1)
+        pdf.cell(200, 8, f"{'Disease Diagnosis'.ljust(30)} {form.disease_diagnosis.rjust(30)}", 0, 1)
+
+    pdf.output('clinical_approach_report.pdf', 'F')
+    return FileResponse(open('clinical_approach_report.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
+
+
 
 
 
