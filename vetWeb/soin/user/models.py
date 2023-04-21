@@ -55,3 +55,39 @@ def post_save_profile_create(sender, instance, created,*args, **kwargs):
         Profile.objects.get_or_create(user=instance)                                       
         
 post_save.connect(post_save_profile_create, sender=User)            
+
+
+class ShopProductType(models.Model):
+
+	name = models.CharField(max_length=45)
+
+	def __str__(self):
+		return u'%s %s' % (self.id, self.name)
+
+
+
+
+class ProductItem(models.Model):
+	name = models.CharField(max_length=45)
+	description = models.CharField(max_length=200, null=True, blank=True)
+	product_type = models.ForeignKey(ShopProductType, on_delete=models.CASCADE)
+	#institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+	def __str__(self):
+		return u'%s %s' % (self.id, self.name)	
+
+
+
+# class ProductItem(models.Model):
+#     name = models.CharField(max_length=64)
+#     unit_cost = models.FloatField()
+
+#     def __str__(self) -> str:
+#         return super().__str__(f'Product Item{self.name}')
+
+
+class SupplierProduct(models.Model):
+    supplier = models.CharField(max_length=64)
+    product = models.ForeignKey(ProductItem, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Supplier Product: {self.product.name}' 		

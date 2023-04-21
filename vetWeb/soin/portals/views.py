@@ -221,9 +221,11 @@ def edit_pregnancy_form(request, pk):
 def clinical_approach(request):
     return render(request, 'portals/clinical_approach.html') 
 
+import json
 @user_passes_test(vet_check, login_url='vet-login')
 def sick_approach(request):
     if request.method == "POST":
+        print(type(request.POST))
         form = SickApproachForm(request.POST)
         if form.is_valid():
             vet_sick_form = Vet_Forms(vet_username=request.user, is_sick_approach_form=True)
@@ -681,10 +683,12 @@ def edit_referral_form(request, pk):
 	return render(request, 'portals/editform.html', {'form':referral_form, 'form_name':'referral'})
 
 def sick_form_pdf(request):
-    sick_forms = Sick_Approach_Form.objects.filter(farmer_username=request.user)
+    farmer = Farmer.objects.get(user=request.user)
+    sick_forms = Sick_Approach_Form.objects.filter(farmer=farmer)
     if sick_forms:
         pdf = FPDF('P', 'mm', 'A4')
         for form in sick_forms:
+            print(form)
             pdf.add_page()
             pdf.set_font('courier', 'B', 16)
             pdf.cell(40, 10, 'Clinical Approach Form',0,1)
@@ -703,14 +707,16 @@ def sick_form_pdf(request):
             pdf.cell(200, 8, f"{'Disease Diagnosis'.ljust(30)} {form.disease_diagnosis.rjust(30)}", 0, 1)
             pdf.cell(200, 8, f"{'Differential Diagnosis'.ljust(30)} {form.differential_diagnosis.rjust(30)}", 0, 1)
             pdf.cell(200, 8, f"{'Final Diagnosis'.ljust(30)} {form.final_diagnosis.rjust(30)}", 0, 1)
-            pdf.cell(200, 8, f"{'duration of the sickness '.ljust(30)} {form.sickness_duration.rjust(30)}", 0, 1)
+            pdf.cell(200, 8, f"{'Duration of the sickness '.ljust(30)} {form.sickness_duration.rjust(30)}", 0, 1)
             # more cells here ...
 
 
         pdf.output('clinical_approach_report.pdf', 'F')
         return FileResponse(open('clinical_approach_report.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
 
-
+    else:
+        messages.warning(request, f'No referral form available for {request.user}')
+        return redirect('farmer-portal') 
 class Sick_Form_Pdf(View):
 
     def get(self, request):

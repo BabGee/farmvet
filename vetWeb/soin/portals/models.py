@@ -1,5 +1,8 @@
 from django.db import models
 
+from user.models import *
+
+
 SPECIES_CHOICES = (
     ('0', 'cattle'),
     ('1', 'sheep'),
@@ -101,6 +104,21 @@ PAYMENT=(
 )
 
 
+farmers = [farmer.user.first_name + ' ' +farmer.user.last_name for farmer in Farmer.objects.all()]
+
+farmers_list = []
+
+#key = 1
+
+for farmer in farmers:
+    farmer_tuple = (farmer, farmer)
+    #key+=1
+    farmers_list.append(farmer_tuple)
+    
+    
+
+FARMERS = tuple(farmers_list)
+
 
 
 class Vet_Forms(models.Model):
@@ -129,7 +147,8 @@ class Vet_Forms(models.Model):
 
 class Sick_Approach_Form(models.Model):
 	vet_form = models.OneToOneField(Vet_Forms, on_delete=models.CASCADE, primary_key=True)
-	farmer_username = models.CharField(max_length=12, verbose_name='Farmer Username')
+	#farmer_username = models.CharField(max_length=100, choices=FARMERS, verbose_name='Farmer Username')
+	farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
 	species_affected = models.CharField(max_length=20, choices=SPECIES_CHOICES, default='0', verbose_name='animal species affected',null=True, blank=True)
 	num_of_species_affected = models.PositiveIntegerField(verbose_name='number of species affected' ,null=True, blank=True)
 	id_animal = models.CharField(max_length=100, verbose_name='name of the animal/identification number', null=True, blank=True)
@@ -153,7 +172,7 @@ class Sick_Approach_Form(models.Model):
 	comment = models.CharField(max_length=300,null=True,blank=True,verbose_name='comment')
 	
 	def __str__(self):
-		return f'Sick Form for farmer - {self.farmer_username}'
+		return f'Sick Form for farmer - {self.farmer}'
 	
 
 class Death_Approach_Form(models.Model):
