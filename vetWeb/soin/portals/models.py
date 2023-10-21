@@ -104,16 +104,16 @@ PAYMENT=(
 )
 
 
-farmers = [farmer.user.first_name + ' ' +farmer.user.last_name for farmer in Farmer.objects.all()]
+#farmers = [farmer.user.first_name + ' ' +farmer.user.last_name for farmer in Farmer.objects.all()]
 
 farmers_list = []
 
 #key = 1
 
-for farmer in farmers:
-    farmer_tuple = (farmer, farmer)
-    #key+=1
-    farmers_list.append(farmer_tuple)
+# for farmer in farmers:
+#     farmer_tuple = (farmer, farmer)
+#     #key+=1
+#     farmers_list.append(farmer_tuple)
     
     
 
